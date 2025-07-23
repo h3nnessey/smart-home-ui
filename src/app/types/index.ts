@@ -1,11 +1,23 @@
-export interface CardSchema {
-  id: string;
-  title: string;
-  layout: 'singleDevice' | 'horizontalLayout' | 'verticalLayout';
-  items: CardItem[];
+export interface GetTabItemsResponse {
+  tabs: TabItem[];
 }
 
-export type CardItem = DeviceItem | SensorItem;
+export interface TabItem {
+  id: string;
+  title: string;
+  cards: CardItem[];
+}
+
+export interface CardItem {
+  id: string;
+  title: string;
+  layout: CardLayout;
+  items: SmartDevice[];
+}
+
+export type CardLayout = 'singleDevice' | 'horizontalLayout' | 'verticalLayout';
+
+export type SmartDevice = DeviceItem | SensorItem;
 
 export interface DeviceItem {
   type: 'device';
@@ -14,12 +26,14 @@ export interface DeviceItem {
   state: boolean;
 }
 
+export interface SensorItemValue {
+  amount: number;
+  unit: string;
+}
+
 export interface SensorItem {
   type: 'sensor';
   icon: string;
   label: string;
-  value: {
-    amount: number;
-    unit: string;
-  };
+  value: SensorItemValue;
 }

@@ -1,9 +1,22 @@
-@import "primeicons/primeicons.css";
-
 html {
   font-size: 16px;
 }
 
 body {
   font-family: "Inter", sans-serif;
+  padding: 1rem;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.material-icons {
+  color: var(--p-primary-color);
+
+  &.active {
+    color: var(--p-amber-300);
+  }
 }

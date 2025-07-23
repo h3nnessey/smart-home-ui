@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: fit-content;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid rgba(207, 207, 207, 0.15);
+  border-radius: 0.5rem;
+
+  &[data-layout="verticalLayout"] {
+    flex-direction: row;
+
+    .icon {
+      order: -1;
+    }
+  }
+}

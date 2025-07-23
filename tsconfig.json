@@ -16,7 +16,7 @@
     "module": "preserve",
     "verbatimModuleSyntax": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/app/*"]
     }
   },
   "angularCompilerOptions": {
