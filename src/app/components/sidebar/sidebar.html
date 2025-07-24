@@ -1,1 +1,48 @@
-<p>sidebar works!</p>
+<aside class="sidebar">
+  <!-- header -->
+  <header class="header" tuiHeader="h4">
+    <hgroup tuiTitle>
+      <h1>Smart Home UI</h1>
+    </hgroup>
+    <button
+      appearance="outline"
+      iconStart="@tui.material.filled.close"
+      size="m"
+      tuiIconButton
+      type="button"
+      [style.border-radius.%]="100"
+    ></button>
+  </header>
+  <!-- header -->
+
+  <!-- menu -->
+  <nav class="nav">
+    <ul>
+      <li>
+        <!-- active -->
+        <button appearance="outline" tuiButton type="button">
+          <tui-avatar
+            class="icon"
+            size="m"
+            src="@tui.material.filled.dashboard"
+          />
+          Dashboard
+        </button>
+      </li>
+      <li>
+        <button appearance="action-grayscale" tuiButton type="button" disabled>
+          <tui-avatar size="m" src="@tui.material.filled.info" />
+          About
+        </button>
+      </li>
+    </ul>
+  </nav>
+  <!-- menu -->
+
+  <!-- footer -->
+  <footer class="footer">
+    <tui-avatar size="l" src="RS" [style.background]="'RS' | tuiAutoColor" />
+    <h3 class="subtitle">RSSchool. Angular.</h3>
+  </footer>
+  <!-- footer -->
+</aside>

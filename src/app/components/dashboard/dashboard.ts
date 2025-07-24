@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { TabSwitcher } from './tab-switcher/tab-switcher';
 import { TabsState } from '@/services/tabs-state';
 import { CardList } from '../card-list/card-list';
+import { TabSwitcher } from './tab-switcher/tab-switcher';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,5 +11,5 @@ import { CardList } from '../card-list/card-list';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Dashboard {
-  protected readonly cards = inject(TabsState).currentTabContent;
+  protected readonly cards = inject(TabsState).activeTabContent;
 }

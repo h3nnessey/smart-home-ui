@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { TuiAutoColorPipe, TuiButton } from '@taiga-ui/core';
+import { TuiHeader } from '@taiga-ui/layout';
+import { TuiAvatar } from '@taiga-ui/kit';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [],
+  imports: [TuiHeader, TuiButton, TuiAvatar, TuiAutoColorPipe],
   templateUrl: './sidebar.html',
-  styleUrl: './sidebar.scss'
+  styleUrls: ['./sidebar.scss'],
 })
-export class Sidebar {
-
-}
+export class Sidebar {}

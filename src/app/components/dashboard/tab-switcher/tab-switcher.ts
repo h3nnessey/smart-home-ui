@@ -1,13 +1,6 @@
-import { TabsState } from '@/services/tabs-state';
-import type { TabItem } from '@/types';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  input,
-  model,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { TuiTabs } from '@taiga-ui/kit';
+import { TabsState } from '@/services/tabs-state';
 
 @Component({
   selector: 'app-tab-switcher',

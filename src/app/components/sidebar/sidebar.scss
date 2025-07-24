@@ -1,0 +1,56 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 400px;
+  height: 100%;
+  background: var(--tui-background-elevation-2);
+
+  .header,
+  .nav,
+  .footer {
+    padding: var(--tui-padding-m);
+    border: 1px solid var(--tui-background-neutral-1-hover);
+
+    & {
+      border-bottom: none;
+    }
+  }
+
+  .nav {
+    flex: 1;
+
+    button {
+      width: 100%;
+      justify-content: flex-start;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .icon {
+      color: var(--tui-background-accent-1);
+
+      &.disabled {
+        color: var(--tui-text-secondary);
+      }
+    }
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    padding: var(--tui-padding-s);
+  }
+
+  .footer {
+    display: flex;
+    flex-basis: 15%;
+    align-items: center;
+    gap: var(--tui-padding-l);
+    .subtitle {
+      font-size: 1.1rem;
+    }
+  }
+}
