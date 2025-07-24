@@ -1,10 +1,20 @@
 .sidebar {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 400px;
   height: 100%;
   background: var(--tui-background-elevation-2);
+  transition:
+    width 0.2s ease,
+    opacity 0.1s ease;
+
+  .btn {
+    position: absolute;
+    right: var(--tui-padding-s);
+    top: calc(var(--tui-padding-s) / 2.7);
+  }
 
   .header,
   .nav,
@@ -46,11 +56,33 @@
 
   .footer {
     display: flex;
-    flex-basis: 15%;
+    flex-basis: 10%;
     align-items: center;
     gap: var(--tui-padding-l);
+
     .subtitle {
       font-size: 1.1rem;
+    }
+  }
+
+  &.hidden {
+    width: 50px;
+    overflow: hidden;
+    background: var(--tui-background-primary);
+    .title,
+    .nav,
+    .footer {
+      border: none;
+      visibility: hidden;
+    }
+
+    .btn {
+      top: var(--tui-padding-s);
+      right: 0;
+    }
+
+    .header {
+      border: none;
     }
   }
 }

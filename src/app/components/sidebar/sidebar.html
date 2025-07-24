@@ -1,17 +1,21 @@
-<aside class="sidebar">
+<aside [class.hidden]="!isOpen()" class="sidebar">
   <!-- header -->
   <header class="header" tuiHeader="h4">
-    <hgroup tuiTitle>
+    <hgroup class="title" tuiTitle>
       <h1>Smart Home UI</h1>
     </hgroup>
-    <button
-      appearance="outline"
-      iconStart="@tui.material.filled.close"
-      size="m"
-      tuiIconButton
-      type="button"
-      [style.border-radius.%]="100"
-    ></button>
+    @if (isMobile()) {
+      <button
+        class="btn"
+        appearance="outline"
+        [iconStart]="buttonIcon"
+        size="m"
+        tuiIconButton
+        type="button"
+        [style.border-radius.%]="100"
+        (click)="toggleSidebar()"
+      ></button>
+    }
   </header>
   <!-- header -->
 
