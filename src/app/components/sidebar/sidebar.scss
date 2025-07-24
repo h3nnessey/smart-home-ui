@@ -65,10 +65,12 @@
     }
   }
 
-  &.hidden {
+  &.hidden,
+  &.default-hidden {
     width: 50px;
     overflow: hidden;
     background: var(--tui-background-primary);
+
     .title,
     .nav,
     .footer {
@@ -83,6 +85,14 @@
 
     .header {
       border: none;
+    }
+  }
+
+  @media screen and (width <= 801px) {
+    &:not(&.hidden) {
+      position: fixed;
+      width: 100%;
+      z-index: 1;
     }
   }
 }

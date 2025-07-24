@@ -19,11 +19,13 @@ export class Sidebar {
 
   constructor() {
     this.windowWidth.set(window.innerWidth);
+    this.isOpen.set(window.innerWidth > 1024);
   }
 
   public handleResize(event: Event) {
     const width = (event.target as Window).innerWidth;
 
+    this.isOpen.set(this.isMobile() ? false : true);
     this.windowWidth.set(width);
   }
 

@@ -1,5 +1,4 @@
 <aside [class.hidden]="!isOpen()" class="sidebar">
-  <!-- header -->
   <header class="header" tuiHeader="h4">
     <hgroup class="title" tuiTitle>
       <h1>Smart Home UI</h1>
@@ -17,13 +16,10 @@
       ></button>
     }
   </header>
-  <!-- header -->
 
-  <!-- menu -->
   <nav class="nav">
     <ul>
       <li>
-        <!-- active -->
         <button appearance="outline" tuiButton type="button">
           <tui-avatar
             class="icon"
@@ -41,12 +37,9 @@
       </li>
     </ul>
   </nav>
-  <!-- menu -->
 
-  <!-- footer -->
   <footer class="footer">
     <tui-avatar size="l" src="RS" [style.background]="'RS' | tuiAutoColor" />
     <h3 class="subtitle">RSSchool. Angular.</h3>
   </footer>
-  <!-- footer -->
 </aside>
