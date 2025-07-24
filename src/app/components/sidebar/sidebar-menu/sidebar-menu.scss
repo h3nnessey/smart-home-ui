@@ -1,0 +1,36 @@
+:host {
+  flex: 1;
+  padding: var(--tui-padding-m);
+  border: 1px solid var(--tui-background-neutral-1-hover);
+
+  &:has(.nav.hidden) {
+    border: none;
+    visibility: hidden;
+  }
+}
+
+.nav {
+  width: 100%;
+
+  button {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  .icon {
+    color: var(--tui-background-accent-1);
+
+    &.disabled {
+      color: var(--tui-text-secondary);
+    }
+  }
+
+  &.hidden {
+    border: none;
+    visibility: hidden;
+  }
+}

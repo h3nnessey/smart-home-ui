@@ -1,0 +1,37 @@
+.sidebar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 400px;
+  height: 100%;
+  background: var(--tui-background-elevation-2);
+  transition:
+    width 0.2s ease,
+    opacity 0.1s ease;
+
+  .btn {
+    position: absolute;
+    right: var(--tui-padding-s);
+    top: calc(var(--tui-padding-s) / 2.7);
+  }
+
+  &.hidden {
+    width: 50px;
+    overflow: hidden;
+    background: var(--tui-background-primary);
+
+    .btn {
+      top: var(--tui-padding-s);
+      right: 0;
+    }
+  }
+
+  @media screen and (width <= 801px) {
+    &:not(&.hidden) {
+      position: fixed;
+      width: 100%;
+      z-index: 1;
+    }
+  }
+}

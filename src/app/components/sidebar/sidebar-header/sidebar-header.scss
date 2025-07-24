@@ -1,0 +1,15 @@
+.header {
+  display: flex;
+  align-items: center;
+  padding: var(--tui-padding-m);
+  border: 1px solid var(--tui-background-neutral-1-hover);
+
+  &.hidden {
+    border: none;
+
+    .title {
+      border: none;
+      visibility: hidden;
+    }
+  }
+}

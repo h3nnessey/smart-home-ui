@@ -1,0 +1,42 @@
+export interface GetTabItemsResponse {
+  tabs: TabItem[];
+}
+
+export interface TabItem extends TabBase {
+  cards: CardItem[];
+}
+
+export interface TabBase {
+  id: string;
+  title: string;
+}
+
+export interface CardItem {
+  id: string;
+  title: string;
+  layout: Layout;
+  items: SmartDevice[];
+}
+
+export type Layout = 'singleDevice' | 'horizontalLayout' | 'verticalLayout';
+
+export type SmartDevice = DeviceItem | SensorItem;
+
+export interface DeviceItem {
+  type: 'device';
+  icon: string;
+  label: string;
+  state: boolean;
+}
+
+export interface SensorItemValue {
+  amount: number;
+  unit: string;
+}
+
+export interface SensorItem {
+  type: 'sensor';
+  icon: string;
+  label: string;
+  value: SensorItemValue;
+}

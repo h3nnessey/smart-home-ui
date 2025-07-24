@@ -1,0 +1,30 @@
+.card {
+  max-width: max-content;
+
+  .devices {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.25rem;
+    width: 100%;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  &[data-layout="singleDevice"] {
+    .input {
+      display: none;
+    }
+  }
+
+  &[data-layout="verticalLayout"] {
+    .devices {
+      flex-direction: column;
+    }
+  }
+}

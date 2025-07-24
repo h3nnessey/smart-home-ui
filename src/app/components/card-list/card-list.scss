@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--tui-padding-l);
+  padding: var(--tui-padding-l);
+
+  @media screen and (width <= 880px) {
+    & {
+      justify-content: center;
+    }
+  }
+}

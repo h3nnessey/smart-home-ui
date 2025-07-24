@@ -1,0 +1,18 @@
+<label class="label" tuiCell [appHighlightDevice]="device().state">
+  <tui-icon
+    class="icon"
+    [icon]="icon"
+    [class.active]="device().state"
+    size="l"
+  />
+  <div class="title" tuiTitle>{{ device().label }}</div>
+  <input
+    [class.hidden]="layout() === 'singleDevice'"
+    class="input"
+    tuiSwitch
+    type="checkbox"
+    [showIcons]="false"
+    [ngModel]="device().state"
+    (ngModelChange)="changeState($event)"
+  />
+</label>

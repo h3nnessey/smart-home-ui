@@ -1,0 +1,31 @@
+:host {
+  width: 100%;
+}
+
+.sensor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  padding: var(--tui-padding-s);
+  gap: 1rem;
+
+  .title {
+    margin-bottom: 0;
+  }
+
+  .icon {
+    color: var(--tui-background-accent-1-hover);
+  }
+
+  &[data-layout="verticalLayout"] {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0;
+
+    .icon {
+      order: -1;
+    }
+  }
+}
