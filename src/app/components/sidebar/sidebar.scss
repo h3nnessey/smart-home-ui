@@ -65,8 +65,7 @@
     }
   }
 
-  &.hidden,
-  &.default-hidden {
+  &.hidden {
     width: 50px;
     overflow: hidden;
     background: var(--tui-background-primary);
