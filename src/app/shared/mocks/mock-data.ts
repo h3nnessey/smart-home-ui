@@ -17,7 +17,7 @@ export const MOCK_DATA: GetTabItemsResponse = {
               label: 'Temperature',
               value: {
                 amount: 18.5,
-                unit: '\u00b0C',
+                unit: '\u00B0C',
               },
             },
             {
@@ -104,7 +104,7 @@ export const MOCK_DATA: GetTabItemsResponse = {
               label: 'Temperature',
               value: {
                 amount: 23.5,
-                unit: '\u00b0C',
+                unit: '\u00B0C',
               },
             },
             {

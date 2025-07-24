@@ -5,7 +5,7 @@ import eslintPluginPrettier from "eslint-plugin-prettier/recommended";
 import eslintPluginUnicorn from "eslint-plugin-unicorn";
 
 export default tseslint.config(
-  { ignores: ["dist", "node_modules"] },
+  { ignores: ["dist", "node_modules", ".angular"] },
   {
     extends: [
       js.configs.recommended,
@@ -20,6 +20,7 @@ export default tseslint.config(
     },
     rules: {
       "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-extraneous-class": "off",
     },
   },
 );

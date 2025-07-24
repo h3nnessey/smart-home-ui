@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-sidebar-footer',
   imports: [],
   templateUrl: './sidebar-footer.html',
-  styleUrl: './sidebar-footer.scss'
+  styleUrl: './sidebar-footer.scss',
 })
-export class SidebarFooter {
-
-}
+export class SidebarFooter {}

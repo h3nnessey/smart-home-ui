@@ -41,9 +41,9 @@ export class Card {
   }
 
   public toggleDevices(checked: boolean) {
-    this.devices().forEach((device) => {
+    for (const device of this.devices()) {
       device.changeState(checked);
-    });
+    }
   }
 
   public setSwitchState() {

@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-sidebar-menu',
   imports: [],
   templateUrl: './sidebar-menu.html',
-  styleUrl: './sidebar-menu.scss'
+  styleUrl: './sidebar-menu.scss',
 })
-export class SidebarMenu {
-
-}
+export class SidebarMenu {}
