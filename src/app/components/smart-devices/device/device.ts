@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { TuiIcon, TuiTitle } from '@taiga-ui/core';
 import { TuiBadgedContent, TuiSwitch } from '@taiga-ui/kit';
 import { TuiCell } from '@taiga-ui/layout';
+import { HighlightDevice } from '@/directives/highlight-device';
 import type { DeviceItem, Layout } from '@/types';
 
 @Component({
@@ -19,6 +20,7 @@ import type { DeviceItem, Layout } from '@/types';
     TuiIcon,
     TuiTitle,
     TuiCell,
+    HighlightDevice,
   ],
   templateUrl: './device.html',
   styleUrl: './device.scss',
