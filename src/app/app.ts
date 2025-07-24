@@ -1,11 +1,12 @@
 import { TuiRoot } from '@taiga-ui/core';
-import { Component } from '@angular/core';
-import { Device } from './components/smart-devices/device/device';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { CardList } from './components/card-list/card-list';
 
 @Component({
   selector: 'app-root',
-  imports: [Device, TuiRoot],
+  imports: [TuiRoot, CardList],
   templateUrl: './app.html',
   styleUrl: './app.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {}

@@ -1,10 +1,18 @@
-<label tuiCell class="label">
+<label class="label" tuiCell>
   <tui-icon
+    class="icon"
     [icon]="icon"
-    [style.color]="deviceData.state ? 'var(--tui-background-accent-2)' : ''"
-    appearance="negative"
+    [class.active]="device().state"
     size="l"
   />
-  <div tuiTitle>{{ deviceData.label }}</div>
-  <input tuiSwitch type="checkbox" [(ngModel)]="deviceData.state" />
+  <div class="title" tuiTitle>{{ device().label }}</div>
+  <input
+    [class.hidden]="layout() === 'singleDevice'"
+    class="input"
+    tuiSwitch
+    type="checkbox"
+    [showIcons]="false"
+    [ngModel]="device().state"
+    (ngModelChange)="changeState($event)"
+  />
 </label>

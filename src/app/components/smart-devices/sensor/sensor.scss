@@ -1,16 +1,28 @@
 :host {
+  width: 100%;
+}
+
+.sensor {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  max-width: fit-content;
-  gap: 0.5rem;
-  padding: 0.5rem;
-  border: 1px solid rgba(207, 207, 207, 0.15);
-  border-radius: 0.5rem;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  padding: var(--tui-padding-s);
+  gap: 1rem;
+
+  .title {
+    margin-bottom: 0;
+  }
+
+  .icon {
+    color: var(--tui-background-accent-1);
+  }
 
   &[data-layout="verticalLayout"] {
     flex-direction: row;
+    justify-content: space-between;
+    padding: 0;
 
     .icon {
       order: -1;

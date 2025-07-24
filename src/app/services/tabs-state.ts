@@ -1,15 +1,11 @@
-import { Injectable, resource } from '@angular/core';
-import type { GetTabItemsResponse } from '@/types';
+import { Injectable } from '@angular/core';
+import { MOCK_DATA } from '@/shared/mocks/mock-data';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TabsState {
-  readonly tabsResource = resource({
-    loader: () =>
-      fetch('./mocks/mock-data.json')
-        .then<GetTabItemsResponse>((res) => res.json())
-        .catch(() => []),
-    defaultValue: [],
-  });
+  public getTabs() {
+    return MOCK_DATA;
+  }
 }

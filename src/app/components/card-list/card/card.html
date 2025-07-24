@@ -1,1 +1,36 @@
-<p>card works!</p>
+<div
+  class="card"
+  [attr.data-layout]="card().layout"
+  tuiAppearance="floating"
+  tuiCardLarge
+>
+  <header class="header" tuiHeader>
+    <h2 tuiTitle>{{ card().title }}</h2>
+    @if (devices().length > 1) {
+      <input
+        class="input"
+        [showIcons]="false"
+        tuiSwitch
+        type="checkbox"
+        [ngModel]="switchState"
+        (ngModelChange)="toggleDevices($event)"
+      />
+    }
+  </header>
+  <div class="devices">
+    @for (item of card().items; track item.label) {
+      @switch (item.type) {
+        @case ("device") {
+          <app-device
+            [layout]="card().layout"
+            [device]="item"
+            (stateChanged)="setSwitchState()"
+          ></app-device>
+        }
+        @case ("sensor") {
+          <app-sensor [layout]="card().layout" [sensor]="item"></app-sensor>
+        }
+      }
+    }
+  </div>
+</div>

@@ -1,5 +1,20 @@
+:host {
+  width: 100%;
+}
+
 .label {
   display: flex;
-  max-width: fit-content;
-  gap: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+  user-select: none;
+
+  .icon.active {
+    color: var(--tui-background-accent-2);
+  }
+
+  .input.hidden {
+    display: none;
+  }
 }

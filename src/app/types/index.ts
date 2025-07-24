@@ -11,11 +11,11 @@ export interface TabItem {
 export interface CardItem {
   id: string;
   title: string;
-  layout: CardLayout;
+  layout: Layout;
   items: SmartDevice[];
 }
 
-export type CardLayout = 'singleDevice' | 'horizontalLayout' | 'verticalLayout';
+export type Layout = 'singleDevice' | 'horizontalLayout' | 'verticalLayout';
 
 export type SmartDevice = DeviceItem | SensorItem;
 
