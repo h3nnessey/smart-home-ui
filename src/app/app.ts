@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
-import { Sensor } from './components/smart-devices/sensor/sensor';
+import { TuiRoot } from '@taiga-ui/core';
+import { Component } from '@angular/core';
+import { Device } from './components/smart-devices/device/device';
 
 @Component({
   selector: 'app-root',
-  imports: [Sensor],
+  imports: [Device, TuiRoot],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

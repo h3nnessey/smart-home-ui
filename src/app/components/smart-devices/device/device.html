@@ -1,1 +1,10 @@
-<p>device works!</p>
+<label tuiCell class="label">
+  <tui-icon
+    [icon]="icon"
+    [style.color]="deviceData.state ? 'var(--tui-background-accent-2)' : ''"
+    appearance="negative"
+    size="l"
+  />
+  <div tuiTitle>{{ deviceData.label }}</div>
+  <input tuiSwitch type="checkbox" [(ngModel)]="deviceData.state" />
+</label>

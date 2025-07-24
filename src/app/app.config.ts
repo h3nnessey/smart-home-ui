@@ -1,25 +1,19 @@
+import { provideEventPlugins } from '@taiga-ui/event-plugins';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import {
   type ApplicationConfig,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
-import Aura from '@primeuix/themes/aura';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideAnimations(),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
-    provideAnimationsAsync(),
-    providePrimeNG({
-      theme: {
-        preset: Aura,
-      },
-      ripple: true,
-    }),
+    provideEventPlugins(),
   ],
 };
