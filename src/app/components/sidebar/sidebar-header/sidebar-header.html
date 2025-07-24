@@ -1,1 +1,5 @@
-<p>sidebar-header works!</p>
+<header [class.hidden]="hidden()" class="header" tuiHeader="h4">
+  <hgroup class="title" tuiTitle>
+    <h1>{{ title() }}</h1>
+  </hgroup>
+</header>

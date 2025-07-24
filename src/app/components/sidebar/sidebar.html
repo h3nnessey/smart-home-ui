@@ -1,45 +1,19 @@
+@let hidden = !isOpen();
+
 <aside [class.hidden]="!isOpen()" class="sidebar">
-  <header class="header" tuiHeader="h4">
-    <hgroup class="title" tuiTitle>
-      <h1>Smart Home UI</h1>
-    </hgroup>
-    @if (isMobile()) {
-      <button
-        class="btn"
-        appearance="outline"
-        [iconStart]="buttonIcon"
-        size="m"
-        tuiIconButton
-        type="button"
-        [style.border-radius.%]="100"
-        (click)="toggleSidebar()"
-      ></button>
-    }
-  </header>
-
-  <nav class="nav">
-    <ul>
-      <li>
-        <button appearance="outline" tuiButton type="button">
-          <tui-avatar
-            class="icon"
-            size="m"
-            src="@tui.material.filled.dashboard"
-          />
-          Overview
-        </button>
-      </li>
-      <li>
-        <button appearance="action-grayscale" tuiButton type="button" disabled>
-          <tui-avatar size="m" src="@tui.material.filled.info" />
-          About
-        </button>
-      </li>
-    </ul>
-  </nav>
-
-  <footer class="footer">
-    <tui-avatar size="l" src="RS" [style.background]="'RS' | tuiAutoColor" />
-    <h3 class="subtitle">RSSchool. Angular.</h3>
-  </footer>
+  <app-sidebar-header title="Smart Home UI" [hidden]="hidden" />
+  @if (isMobile()) {
+    <button
+      class="btn"
+      appearance="outline"
+      [iconStart]="buttonIcon"
+      size="m"
+      tuiIconButton
+      type="button"
+      [style.border-radius.%]="100"
+      (click)="toggleSidebar()"
+    ></button>
+  }
+  <app-sidebar-menu [items]="items()" [hidden]="hidden" />
+  <app-sidebar-footer src="RS" title="RSSchool. Angular" [hidden]="hidden" />
 </aside>

@@ -1,1 +1,22 @@
-<p>sidebar-menu works!</p>
+<nav [class.hidden]="hidden()" class="nav">
+  <ul>
+    @for (item of items(); track item.label) {
+      <li>
+        <button
+          [appearance]="item.disabled ? 'action-grayscale' : 'outline'"
+          tuiButton
+          type="button"
+          [disabled]="item.disabled"
+        >
+          <tui-avatar
+            [class.disabled]="item.disabled"
+            class="icon"
+            size="m"
+            [src]="materialIcon(item.icon)"
+          />
+          {{ item.label }}
+        </button>
+      </li>
+    }
+  </ul>
+</nav>

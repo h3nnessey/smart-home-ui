@@ -1,0 +1,21 @@
+.footer {
+  display: flex;
+  flex-basis: 10%;
+  align-items: center;
+  gap: var(--tui-padding-l);
+  padding: var(--tui-padding-m);
+  border: 1px solid var(--tui-background-neutral-1-hover);
+
+  .subtitle {
+    font-size: 1.1rem;
+  }
+
+  & {
+    border-bottom: none;
+  }
+
+  &.hidden {
+    border: none;
+    visibility: hidden;
+  }
+}

@@ -16,74 +16,14 @@
     top: calc(var(--tui-padding-s) / 2.7);
   }
 
-  .header,
-  .nav,
-  .footer {
-    padding: var(--tui-padding-m);
-    border: 1px solid var(--tui-background-neutral-1-hover);
-
-    & {
-      border-bottom: none;
-    }
-  }
-
-  .nav {
-    flex: 1;
-
-    button {
-      width: 100%;
-      justify-content: flex-start;
-    }
-
-    ul {
-      list-style: none;
-    }
-
-    .icon {
-      color: var(--tui-background-accent-1);
-
-      &.disabled {
-        color: var(--tui-text-secondary);
-      }
-    }
-  }
-
-  .header {
-    display: flex;
-    align-items: center;
-    padding: var(--tui-padding-s);
-  }
-
-  .footer {
-    display: flex;
-    flex-basis: 10%;
-    align-items: center;
-    gap: var(--tui-padding-l);
-
-    .subtitle {
-      font-size: 1.1rem;
-    }
-  }
-
   &.hidden {
     width: 50px;
     overflow: hidden;
     background: var(--tui-background-primary);
 
-    .title,
-    .nav,
-    .footer {
-      border: none;
-      visibility: hidden;
-    }
-
     .btn {
       top: var(--tui-padding-s);
       right: 0;
-    }
-
-    .header {
-      border: none;
     }
   }
 

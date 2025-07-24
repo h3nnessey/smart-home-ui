@@ -11,4 +11,17 @@ import { TabSwitcher } from './components/tab-switcher/tab-switcher';
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class App {}
+export class App {
+  protected readonly menuItems = [
+    {
+      label: 'Overview',
+      icon: 'dashboard',
+      disabled: false,
+    },
+    {
+      label: 'About',
+      icon: 'info',
+      disabled: true,
+    },
+  ];
+}
