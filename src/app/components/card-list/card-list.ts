@@ -1,6 +1,6 @@
-import { TabsState } from '@/services/tabs-state';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { Card } from './card/card';
+import type { CardItem } from '@/types';
 
 @Component({
   selector: 'app-card-list',
@@ -10,5 +10,5 @@ import { Card } from './card/card';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardList {
-  protected readonly cards = inject(TabsState).getTabs().tabs[0].cards;
+  public readonly cards = input.required<CardItem[]>();
 }

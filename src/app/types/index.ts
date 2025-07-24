@@ -2,10 +2,13 @@ export interface GetTabItemsResponse {
   tabs: TabItem[];
 }
 
-export interface TabItem {
+export interface TabItem extends TabBase {
+  cards: CardItem[];
+}
+
+export interface TabBase {
   id: string;
   title: string;
-  cards: CardItem[];
 }
 
 export interface CardItem {

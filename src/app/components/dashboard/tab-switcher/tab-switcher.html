@@ -1,1 +1,5 @@
-<p>tab-switcher works!</p>
+<tui-tabs [(activeItemIndex)]="tabsState.activeTabIndex" size="l">
+  @for (tab of tabs; track tab.id) {
+    <button tuiTab (click)="handleTabClick($index)">{{ tab.title }}</button>
+  }
+</tui-tabs>
