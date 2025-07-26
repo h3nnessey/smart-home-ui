@@ -2,14 +2,13 @@
   display: flex;
   align-items: center;
   padding: var(--tui-padding-m);
-  border: 1px solid var(--tui-background-neutral-1-hover);
+  border-top: 1px solid var(--tui-border-normal);
+  border-left: 1px solid var(--tui-border-normal);
+  box-shadow: inset 0 -1px var(--tui-border-normal);
 
   &.hidden {
     border: none;
-
-    .title {
-      border: none;
-      visibility: hidden;
-    }
+    box-shadow: none;
+    visibility: hidden;
   }
 }

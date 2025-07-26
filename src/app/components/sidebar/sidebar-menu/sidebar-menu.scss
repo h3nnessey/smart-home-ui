@@ -1,7 +1,7 @@
 :host {
   flex: 1;
   padding: var(--tui-padding-m);
-  border: 1px solid var(--tui-background-neutral-1-hover);
+  border-left: 1px solid var(--tui-border-normal);
 
   &:has(.nav.hidden) {
     border: none;

@@ -7,3 +7,9 @@ body {
   margin: 0;
   box-sizing: border-box;
 }
+
+.t-root-content {
+  display: flex;
+  min-height: 100vh;
+  height: 100%;
+}

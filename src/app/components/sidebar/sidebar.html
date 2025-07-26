@@ -2,18 +2,16 @@
 
 <aside [class.hidden]="!isOpen()" class="sidebar">
   <app-sidebar-header title="Smart Home UI" [hidden]="hidden" />
-  @if (isMobile()) {
-    <button
-      class="btn"
-      appearance="outline"
-      iconStart="{{ icon | tuiMaterialIcon }}"
-      size="m"
-      tuiIconButton
-      type="button"
-      [style.border-radius.%]="100"
-      (click)="toggleSidebar()"
-    ></button>
-  }
-  <app-sidebar-menu [items]="items()" [hidden]="hidden" />
+  <button
+    class="btn"
+    appearance="secondary"
+    iconStart="{{ icon | tuiMaterialIcon }}"
+    size="m"
+    tuiIconButton
+    [title]="isOpen() ? 'Close sidebar' : 'Open sidebar'"
+    type="button"
+    (click)="toggleSidebar()"
+  ></button>
+  <app-sidebar-menu [items]="items" [hidden]="hidden" />
   <app-sidebar-footer initials="VS" username="h3nnessey" [hidden]="hidden" />
 </aside>

@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { TabsState } from '@/services/tabs-state';
 import { CardList } from '../card-list/card-list';
+import { TabSwitcher } from '../tab-switcher/tab-switcher';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CardList],
+  imports: [CardList, TabSwitcher],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

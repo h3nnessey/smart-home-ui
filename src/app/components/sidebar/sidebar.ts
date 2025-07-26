@@ -1,9 +1,22 @@
-import { Component, input, signal, type OnDestroy } from '@angular/core';
+import { Component, signal, type OnDestroy } from '@angular/core';
 import { TuiButton } from '@taiga-ui/core';
 import { TuiMaterialIconPipe } from '@/pipes/tui-material-icon-pipe';
 import { SidebarHeader } from './sidebar-header/sidebar-header';
 import { SidebarFooter } from './sidebar-footer/sidebar-footer';
 import { SidebarMenu, type MenuItem } from './sidebar-menu/sidebar-menu';
+
+const ITEMS: MenuItem[] = [
+  {
+    label: 'Overview',
+    icon: 'dashboard',
+    disabled: false,
+  },
+  {
+    label: 'About',
+    icon: 'info',
+    disabled: true,
+  },
+];
 
 @Component({
   selector: 'app-sidebar',
@@ -18,9 +31,9 @@ import { SidebarMenu, type MenuItem } from './sidebar-menu/sidebar-menu';
   styleUrls: ['./sidebar.scss'],
 })
 export class Sidebar implements OnDestroy {
-  public readonly items = input.required<MenuItem[]>();
   protected readonly isOpen = signal(true);
-  protected isMobile = signal(false);
+  protected readonly isMobile = signal(false);
+  protected readonly items = ITEMS;
   private mobileMediaQuery?: MediaQueryList;
 
   constructor() {
@@ -50,7 +63,7 @@ export class Sidebar implements OnDestroy {
   }
 
   public get icon() {
-    return this.isOpen() ? 'close' : 'menu';
+    return this.isOpen() ? 'close' : 'more_vert';
   }
 
   ngOnDestroy() {

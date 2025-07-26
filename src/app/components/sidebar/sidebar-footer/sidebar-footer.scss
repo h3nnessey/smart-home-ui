@@ -1,21 +1,22 @@
-.footer {
-  display: flex;
-  flex-basis: 10%;
-  align-items: center;
-  gap: var(--tui-padding-l);
-  padding: var(--tui-padding-m);
-  border: 1px solid var(--tui-background-neutral-1-hover);
+:host {
+  border-left: 1px solid var(--tui-border-normal);
+  border-bottom: 1px solid var(--tui-border-normal);
+  border-top: 1px solid var(--tui-border-normal);
 
-  .subtitle {
-    font-size: 1.1rem;
-  }
-
-  & {
-    border-bottom: none;
-  }
-
-  &.hidden {
+  &:has(.footer.hidden) {
     border: none;
     visibility: hidden;
+  }
+
+  .footer {
+    display: flex;
+    flex-basis: 10%;
+    align-items: center;
+    gap: var(--tui-padding-l);
+    padding: var(--tui-padding-m);
+
+    .subtitle {
+      font-size: 1.1rem;
+    }
   }
 }

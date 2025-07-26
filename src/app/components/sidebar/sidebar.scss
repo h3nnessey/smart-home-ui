@@ -5,25 +5,31 @@
   justify-content: center;
   width: 400px;
   height: 100%;
-  background: var(--tui-background-elevation-2);
-  transition:
-    width 0.2s ease,
-    opacity 0.1s ease;
+  background: var(--tui-background-base);
+  transition: width 0.2s ease;
 
   .btn {
     position: absolute;
-    right: var(--tui-padding-s);
-    top: calc(var(--tui-padding-s) / 2.7);
+    border-radius: 100%;
+    right: 7px;
+    top: 7px;
   }
 
   &.hidden {
-    width: 50px;
+    width: 15px;
     overflow: hidden;
     background: var(--tui-background-primary);
 
     .btn {
-      top: var(--tui-padding-s);
-      right: 0;
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 15px;
+      border-radius: 0;
+      border-top: 1px solid var(--tui-border-normal);
+      border-left: 1px solid var(--tui-border-normal);
+      border-bottom: 1px solid var(--tui-border-normal);
     }
   }
 
