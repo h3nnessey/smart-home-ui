@@ -1,5 +1,5 @@
 <div [attr.data-layout]="layout()" class="sensor" tuiBlockDetails>
   <h2 class="title" tuiTitle>{{ sensor().label }}</h2>
-  <tui-icon class="icon" [icon]="icon" />
+  <tui-icon class="icon" icon="{{ sensor().icon | tuiMaterialIcon }}" />
   <div class="subtitle" tuiSubtitle>{{ sensor().value | sensorValue }}</div>
 </div>

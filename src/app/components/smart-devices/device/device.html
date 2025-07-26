@@ -1,7 +1,7 @@
 <label class="label" tuiCell [appHighlightDevice]="device().state">
   <tui-icon
     class="icon"
-    [icon]="icon"
+    icon="{{ device().icon | tuiMaterialIcon }}"
     [class.active]="device().state"
     size="l"
   />

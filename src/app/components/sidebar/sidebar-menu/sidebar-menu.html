@@ -12,7 +12,7 @@
             [class.disabled]="item.disabled"
             class="icon"
             size="m"
-            [src]="materialIcon(item.icon)"
+            src="{{ item.icon | tuiMaterialIcon }}"
           />
           {{ item.label }}
         </button>

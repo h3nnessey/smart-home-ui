@@ -6,7 +6,7 @@
     <button
       class="btn"
       appearance="outline"
-      [iconStart]="buttonIcon"
+      iconStart="{{ icon | tuiMaterialIcon }}"
       size="m"
       tuiIconButton
       type="button"
@@ -15,5 +15,5 @@
     ></button>
   }
   <app-sidebar-menu [items]="items()" [hidden]="hidden" />
-  <app-sidebar-footer src="RS" title="RSSchool. Angular" [hidden]="hidden" />
+  <app-sidebar-footer initials="VS" username="h3nnessey" [hidden]="hidden" />
 </aside>

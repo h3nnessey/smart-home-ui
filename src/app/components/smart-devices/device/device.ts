@@ -9,6 +9,7 @@ import { TuiIcon, TuiTitle } from '@taiga-ui/core';
 import { TuiBadgedContent, TuiSwitch } from '@taiga-ui/kit';
 import { TuiCell } from '@taiga-ui/layout';
 import { HighlightDevice } from '@/directives/highlight-device';
+import { TuiMaterialIconPipe } from '@/pipes/tui-material-icon-pipe';
 import type { DeviceItem, Layout } from '@/types';
 
 @Component({
@@ -21,6 +22,7 @@ import type { DeviceItem, Layout } from '@/types';
     TuiTitle,
     TuiCell,
     HighlightDevice,
+    TuiMaterialIconPipe,
   ],
   templateUrl: './device.html',
   styleUrl: './device.scss',
@@ -34,9 +36,5 @@ export class Device {
   public changeState(value: boolean) {
     this.device().state = value;
     this.stateChanged.emit(value);
-  }
-
-  protected get icon() {
-    return `@tui.material.filled.${this.device().icon}`;
   }
 }
