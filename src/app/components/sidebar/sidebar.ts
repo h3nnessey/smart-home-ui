@@ -1,4 +1,4 @@
-import { Component, signal, type OnDestroy } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { TuiButton } from '@taiga-ui/core';
 import { TuiMaterialIconPipe } from '@/pipes/tui-material-icon-pipe';
 import { SidebarHeader } from './sidebar-header/sidebar-header';
@@ -30,33 +30,32 @@ const ITEMS: MenuItem[] = [
   templateUrl: './sidebar.html',
   styleUrls: ['./sidebar.scss'],
 })
-export class Sidebar implements OnDestroy {
+export class Sidebar {
+  private readonly destroyRef = inject(DestroyRef);
   protected readonly isOpen = signal(true);
   protected readonly isMobile = signal(false);
   protected readonly items = ITEMS;
-  private mobileMediaQuery?: MediaQueryList;
 
   constructor() {
-    this.initMediaQuery();
+    this.setupMediaQuery();
   }
 
-  private initMediaQuery() {
-    const { matches } = (this.mobileMediaQuery = globalThis.matchMedia(
-      '(max-width: 1024px)',
-    ));
+  private setupMediaQuery() {
+    const query = globalThis.matchMedia('(max-width: 1024px)');
 
-    this.handleMediaChange({ matches });
+    this.handleMediaChange({ matches: query.matches });
 
-    this.mobileMediaQuery.addEventListener(
-      'change',
-      this.handleMediaChange.bind(this),
-    );
+    query.addEventListener('change', this.handleMediaChange);
+
+    this.destroyRef.onDestroy(() => {
+      query.removeEventListener('change', this.handleMediaChange);
+    });
   }
 
-  private handleMediaChange({ matches }: { matches: boolean }) {
+  private handleMediaChange = ({ matches }: { matches: boolean }) => {
     this.isMobile.set(matches);
     this.isOpen.set(!matches);
-  }
+  };
 
   public toggleSidebar() {
     this.isOpen.update((value) => !value);
@@ -64,12 +63,5 @@ export class Sidebar implements OnDestroy {
 
   public get icon() {
     return this.isOpen() ? 'close' : 'more_vert';
-  }
-
-  ngOnDestroy() {
-    this.mobileMediaQuery?.removeEventListener(
-      'change',
-      this.handleMediaChange,
-    );
   }
 }
