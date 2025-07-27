@@ -1,6 +1,6 @@
 @let hidden = !isOpen();
 
-<aside [class.hidden]="!isOpen()" class="sidebar">
+<aside [class.hidden]="hidden" class="sidebar">
   <app-sidebar-header title="Smart Home UI" [hidden]="hidden" />
   <button
     class="btn"
@@ -8,7 +8,7 @@
     iconStart="{{ icon | tuiMaterialIcon }}"
     size="m"
     tuiIconButton
-    [title]="isOpen() ? 'Close sidebar' : 'Open sidebar'"
+    [title]="!hidden ? 'Close sidebar' : 'Open sidebar'"
     type="button"
     (click)="toggleSidebar()"
   ></button>

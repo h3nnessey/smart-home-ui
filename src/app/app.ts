@@ -1,11 +1,10 @@
-import { TuiRoot } from '@taiga-ui/core';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Sidebar } from './components/sidebar/sidebar';
-import { Dashboard } from './components/dashboard/dashboard';
+import { RouterOutlet } from '@angular/router';
+import { TuiRoot } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-root',
-  imports: [TuiRoot, Sidebar, Dashboard],
+  imports: [TuiRoot, RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
