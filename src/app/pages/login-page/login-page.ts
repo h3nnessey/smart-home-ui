@@ -7,8 +7,19 @@ import {
   TuiTitle,
   TuiIcon,
 } from '@taiga-ui/core';
-import { TuiPassword } from '@taiga-ui/kit';
+import {
+  TuiPassword,
+  TUI_PASSWORD_OPTIONS,
+  type TuiPasswordOptions,
+} from '@taiga-ui/kit';
 import { TuiCardLarge, TuiForm, TuiHeader } from '@taiga-ui/layout';
+
+const options: TuiPasswordOptions = {
+  icons: {
+    hide: '@tui.material.outlined.visibility_off',
+    show: '@tui.material.outlined.visibility',
+  },
+};
 
 @Component({
   selector: 'app-login-page',
@@ -23,6 +34,12 @@ import { TuiCardLarge, TuiForm, TuiHeader } from '@taiga-ui/layout';
     TuiButton,
     TuiIcon,
     TuiPassword,
+  ],
+  providers: [
+    {
+      provide: TUI_PASSWORD_OPTIONS,
+      useValue: options,
+    },
   ],
   templateUrl: './login-page.html',
   styleUrl: './login-page.scss',

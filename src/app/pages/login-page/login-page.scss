@@ -1,8 +1,7 @@
+@use "core";
+
 :host {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+  @include core.page();
 }
 
 .form {
