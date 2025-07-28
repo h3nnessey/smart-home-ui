@@ -13,3 +13,7 @@ body {
   min-height: 100vh;
   height: 100%;
 }
+
+input[type="checkbox"]:checked {
+  background-color: var(--tui-background-accent-2);
+}

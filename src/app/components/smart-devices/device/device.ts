@@ -8,21 +8,21 @@ import { FormsModule } from '@angular/forms';
 import { TuiIcon, TuiTitle } from '@taiga-ui/core';
 import { TuiBadgedContent, TuiSwitch } from '@taiga-ui/kit';
 import { TuiCell } from '@taiga-ui/layout';
-import { HighlightDevice } from '@/directives/highlight-device';
 import { TuiMaterialIconPipe } from '@/pipes/tui-material-icon-pipe';
+import { HighlightElement } from '@/directives/highlight-element';
 import type { DeviceItem, Layout } from '@/types';
 
 @Component({
   selector: 'app-device',
   imports: [
+    FormsModule,
     TuiBadgedContent,
     TuiSwitch,
-    FormsModule,
     TuiIcon,
     TuiTitle,
     TuiCell,
-    HighlightDevice,
     TuiMaterialIconPipe,
+    HighlightElement,
   ],
   templateUrl: './device.html',
   styleUrl: './device.scss',
