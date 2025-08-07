@@ -11,10 +11,15 @@ const addApiPrefix = (request: HttpRequest<unknown>) => {
     return request;
   }
 
-  const url = request.url.startsWith('/') ? request.url.slice(1) : request.url;
+  const hasApiPrefix = request.url.includes('api');
+  const cleanUrl = request.url.startsWith('/')
+    ? request.url.slice(1)
+    : request.url;
 
   return request.clone({
-    url: `${BASE_URL}/api/${url}`,
+    url: hasApiPrefix
+      ? `${BASE_URL}/${cleanUrl}`
+      : `${BASE_URL}/api/${cleanUrl}`,
   });
 };
 
