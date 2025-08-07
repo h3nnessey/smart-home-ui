@@ -49,3 +49,8 @@ export interface SensorItemValue {
   amount: number;
   unit: string;
 }
+
+export interface User {
+  fullName: string;
+  initials: string;
+}

@@ -1,8 +1,21 @@
 <footer [class.hidden]="hidden()" class="footer">
-  <tui-avatar
-    size="l"
-    [src]="initials()"
-    [style.background]="initials() | tuiAutoColor"
-  />
-  <h3 class="subtitle">{{ username() }}</h3>
+  <div class="user-info">
+    <tui-avatar
+      class="avatar"
+      size="l"
+      [src]="initials()"
+      [style.background]="initials() | tuiAutoColor"
+    />
+    <h3 class="subtitle">{{ username() }}</h3>
+  </div>
+  <button
+    appearance="secondary"
+    size="m"
+    tuiButton
+    type="button"
+    (click)="onLogout()"
+  >
+    <tui-icon [icon]="icon | tuiMaterialIcon" />
+    Logout
+  </button>
 </footer>

@@ -22,6 +22,8 @@ export default tseslint.config(
       "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/no-extraneous-class": "off",
       "unicorn/prevent-abbreviations": "off",
+      "unicorn/no-null": "off",
+      "unicorn/consistent-function-scoping": "off",
     },
   },
 );

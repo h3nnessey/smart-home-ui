@@ -1,4 +1,9 @@
 <tui-block-status>
   <img [alt]="message" [src]="imageSrc" tuiSlot="top" />
   <h4>{{ message }}</h4>
+  @if (!isAuthed()) {
+    <button appearance="primary" size="l" tuiButton routerLink="/login">
+      Home
+    </button>
+  }
 </tui-block-status>

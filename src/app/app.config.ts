@@ -1,4 +1,4 @@
-import { provideEventPlugins } from '@taiga-ui/event-plugins';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
   type ApplicationConfig,
@@ -6,14 +6,17 @@ import {
   provideZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { provideEventPlugins } from '@taiga-ui/event-plugins';
 import { routes } from './app.routes';
+import { authInterceptor } from './interceptors/auth-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideAnimations(),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
+    provideAnimations(),
     provideRouter(routes),
     provideEventPlugins(),
+    provideHttpClient(withInterceptors([authInterceptor])),
   ],
 };

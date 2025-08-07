@@ -4,6 +4,7 @@ import { TuiMaterialIconPipe } from '@/pipes/tui-material-icon-pipe';
 import { SidebarHeader } from './sidebar-header/sidebar-header';
 import { SidebarFooter } from './sidebar-footer/sidebar-footer';
 import { SidebarMenu, type MenuItem } from './sidebar-menu/sidebar-menu';
+import { AuthService } from '@/services/auth-service';
 
 const ITEMS: MenuItem[] = [
   {
@@ -32,8 +33,11 @@ const ITEMS: MenuItem[] = [
 })
 export class Sidebar {
   private readonly destroyRef = inject(DestroyRef);
+  private readonly authService = inject(AuthService);
   protected readonly isOpen = signal(true);
   protected readonly isMobile = signal(false);
+  protected readonly isAuthed = this.authService.isAuthed;
+  protected readonly user = this.authService.user;
   protected readonly items = ITEMS;
 
   constructor() {
@@ -59,6 +63,10 @@ export class Sidebar {
 
   public toggleSidebar() {
     this.isOpen.update((value) => !value);
+  }
+
+  public handleLogout() {
+    this.authService.logout();
   }
 
   public get icon() {
