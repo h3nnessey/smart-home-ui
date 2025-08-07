@@ -11,7 +11,7 @@ import { TuiCardLarge, TuiHeader } from '@taiga-ui/layout';
 import { TuiSwitch } from '@taiga-ui/kit';
 import { Device } from '@/components/smart-devices/device/device';
 import { Sensor } from '@/components/smart-devices/sensor/sensor';
-import type { CardItem } from '@/types';
+import { SmartDeviceType, type CardItem } from '@/types';
 
 @Component({
   selector: 'app-card',
@@ -32,6 +32,7 @@ import type { CardItem } from '@/types';
 export class Card {
   public readonly card = input.required<CardItem>();
   protected readonly devices = viewChildren(Device);
+  protected readonly smartDeviceType = SmartDeviceType;
   protected switchState = false;
 
   constructor() {

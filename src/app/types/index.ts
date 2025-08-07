@@ -18,25 +18,34 @@ export interface CardItem {
   items: SmartDevice[];
 }
 
-export type Layout = 'singleDevice' | 'horizontalLayout' | 'verticalLayout';
+export enum Layout {
+  SingleDevice = 'singleDevice',
+  HorizontalLayout = 'horizontalLayout',
+  VerticalLayout = 'verticalLayout',
+}
 
 export type SmartDevice = DeviceItem | SensorItem;
 
 export interface DeviceItem {
-  type: 'device';
+  type: SmartDeviceType.Device;
   icon: string;
   label: string;
   state: boolean;
 }
 
-export interface SensorItemValue {
-  amount: number;
-  unit: string;
-}
-
 export interface SensorItem {
-  type: 'sensor';
+  type: SmartDeviceType.Sensor;
   icon: string;
   label: string;
   value: SensorItemValue;
+}
+
+export enum SmartDeviceType {
+  Device = 'device',
+  Sensor = 'sensor',
+}
+
+export interface SensorItemValue {
+  amount: number;
+  unit: string;
 }

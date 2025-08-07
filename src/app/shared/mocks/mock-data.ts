@@ -1,4 +1,4 @@
-import type { GetTabItemsResponse } from '@/types';
+import { Layout, SmartDeviceType, type GetTabItemsResponse } from '@/types';
 
 export const MOCK_DATA: GetTabItemsResponse = {
   tabs: [
@@ -9,10 +9,10 @@ export const MOCK_DATA: GetTabItemsResponse = {
         {
           id: 'balcony-weather',
           title: 'Balcony',
-          layout: 'horizontalLayout',
+          layout: Layout.HorizontalLayout,
           items: [
             {
-              type: 'sensor',
+              type: SmartDeviceType.Sensor,
               icon: 'thermostat',
               label: 'Temperature',
               value: {
@@ -21,7 +21,7 @@ export const MOCK_DATA: GetTabItemsResponse = {
               },
             },
             {
-              type: 'sensor',
+              type: SmartDeviceType.Sensor,
               icon: 'water_drop',
               label: 'Humidity',
               value: {
@@ -30,7 +30,7 @@ export const MOCK_DATA: GetTabItemsResponse = {
               },
             },
             {
-              type: 'sensor',
+              type: SmartDeviceType.Sensor,
               icon: 'cloud',
               label: 'Weather',
               value: {
@@ -43,10 +43,10 @@ export const MOCK_DATA: GetTabItemsResponse = {
         {
           id: 'indoor-rooms',
           title: 'Rooms',
-          layout: 'verticalLayout',
+          layout: Layout.VerticalLayout,
           items: [
             {
-              type: 'sensor',
+              type: SmartDeviceType.Sensor,
               icon: 'co2',
               label: 'CO2 Sensor',
               value: {
@@ -55,7 +55,7 @@ export const MOCK_DATA: GetTabItemsResponse = {
               },
             },
             {
-              type: 'sensor',
+              type: SmartDeviceType.Sensor,
               icon: 'water_drop',
               label: 'Humidity',
               value: {
@@ -68,10 +68,10 @@ export const MOCK_DATA: GetTabItemsResponse = {
         {
           id: 'bathroom-motion',
           title: 'Bathroom',
-          layout: 'singleDevice',
+          layout: Layout.SingleDevice,
           items: [
             {
-              type: 'sensor',
+              type: SmartDeviceType.Sensor,
               icon: 'motion_photos_on',
               label: 'Motion Sensor',
               value: {
@@ -84,22 +84,22 @@ export const MOCK_DATA: GetTabItemsResponse = {
         {
           id: 'living-room-mixed',
           title: 'Living Room',
-          layout: 'verticalLayout',
+          layout: Layout.VerticalLayout,
           items: [
             {
-              type: 'device',
+              type: SmartDeviceType.Device,
               icon: 'lightbulb',
               label: 'Floor Lamp',
               state: true,
             },
             {
-              type: 'device',
+              type: SmartDeviceType.Device,
               icon: 'power',
               label: 'TV Socket',
               state: false,
             },
             {
-              type: 'sensor',
+              type: SmartDeviceType.Sensor,
               icon: 'thermostat',
               label: 'Temperature',
               value: {
@@ -108,7 +108,7 @@ export const MOCK_DATA: GetTabItemsResponse = {
               },
             },
             {
-              type: 'sensor',
+              type: SmartDeviceType.Sensor,
               icon: 'co2',
               label: 'CO2 Sensor',
               value: {
@@ -127,10 +127,10 @@ export const MOCK_DATA: GetTabItemsResponse = {
         {
           id: 'kitchen-light',
           title: 'Kitchen',
-          layout: 'singleDevice',
+          layout: Layout.SingleDevice,
           items: [
             {
-              type: 'device',
+              type: SmartDeviceType.Device,
               icon: 'lightbulb',
               label: 'Ceiling Light',
               state: true,
@@ -140,10 +140,10 @@ export const MOCK_DATA: GetTabItemsResponse = {
         {
           id: 'corridor-light',
           title: 'Corridor',
-          layout: 'singleDevice',
+          layout: Layout.SingleDevice,
           items: [
             {
-              type: 'device',
+              type: SmartDeviceType.Device,
               icon: 'lightbulb',
               label: 'Ceiling Light',
               state: false,
@@ -153,10 +153,10 @@ export const MOCK_DATA: GetTabItemsResponse = {
         {
           id: 'living-room-light',
           title: 'Living Room',
-          layout: 'singleDevice',
+          layout: Layout.SingleDevice,
           items: [
             {
-              type: 'device',
+              type: SmartDeviceType.Device,
               icon: 'lightbulb',
               label: 'Chandelier',
               state: true,
@@ -166,10 +166,10 @@ export const MOCK_DATA: GetTabItemsResponse = {
         {
           id: 'bedroom-light',
           title: 'Bedroom',
-          layout: 'singleDevice',
+          layout: Layout.SingleDevice,
           items: [
             {
-              type: 'device',
+              type: SmartDeviceType.Device,
               icon: 'lightbulb',
               label: 'Main Light',
               state: true,
@@ -179,10 +179,10 @@ export const MOCK_DATA: GetTabItemsResponse = {
         {
           id: 'bathroom-light',
           title: 'Bathroom',
-          layout: 'singleDevice',
+          layout: Layout.SingleDevice,
           items: [
             {
-              type: 'device',
+              type: SmartDeviceType.Device,
               icon: 'lightbulb',
               label: 'Ceiling Light',
               state: false,
