@@ -1,8 +1,10 @@
 import { AsyncPipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   inject,
   signal,
 } from '@angular/core';
@@ -73,6 +75,7 @@ const OPTIONS: TuiPasswordOptions = {
 export class LoginPage {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
   protected readonly error = signal<string | null>(null);
   protected isLoading = false;
 
@@ -99,19 +102,24 @@ export class LoginPage {
     this.error.set(null);
     this.isLoading = true;
 
-    this.authService.login(this.form.value as UserCredentials).subscribe({
-      next: () => {
-        this.router.navigate([AppRoutes.DashboardEntry], { replaceUrl: true });
-      },
-      error: (error) => {
-        const message =
-          error.status === 401
-            ? LoginErrorMessages.InvalidCredentials
-            : LoginErrorMessages.UnknownError;
+    this.authService
+      .login(this.form.value as UserCredentials)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.router.navigate([AppRoutes.DashboardEntry], {
+            replaceUrl: true,
+          });
+        },
+        error: (error) => {
+          const message =
+            error.status === 401
+              ? LoginErrorMessages.InvalidCredentials
+              : LoginErrorMessages.UnknownError;
 
-        this.error.set(message);
-        this.isLoading = false;
-      },
-    });
+          this.error.set(message);
+          this.isLoading = false;
+        },
+      });
   }
 }
