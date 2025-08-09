@@ -10,8 +10,10 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { DashboardService } from '@services/dashboard-service';
 import type { RouteParams } from '@typings/api/interfaces';
-import { TabSwitcher } from './tab-switcher/tab-switcher';
+import { TabSwitcher } from '@components/tab-switcher/tab-switcher';
 import { CardList } from '@components/card-list/card-list';
+import { AppRouteParams } from '@typings/api/enums';
+import { AppRoutes } from '@shared/config/app-routes';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,14 +30,16 @@ export class Dashboard {
     this.route.params.pipe(
       distinctUntilChanged(
         (prev, curr) =>
-          prev['dashboardId'] === curr['dashboardId'] &&
-          prev['tabId'] === curr['tabId'],
+          prev[AppRouteParams.DashboardId] ===
+            curr[AppRouteParams.DashboardId] &&
+          prev[AppRouteParams.TabId] === curr[AppRouteParams.TabId],
       ),
     ),
     { initialValue: {} as RouteParams },
   );
-  public readonly dashboardId = () => this.routeParams()['dashboardId'];
-  public readonly tabId = () => this.routeParams()['tabId'];
+  public readonly dashboardId = () =>
+    this.routeParams()[AppRouteParams.DashboardId];
+  public readonly tabId = () => this.routeParams()[AppRouteParams.TabId];
 
   public readonly currentCards = computed(
     () =>
@@ -47,7 +51,7 @@ export class Dashboard {
     this.dashboardService.content().tabs.map(({ id, title }) => ({
       id,
       title,
-      path: ['/dashboard', this.dashboardId(), id],
+      path: [`/${AppRoutes.DashboardEntry}`, this.dashboardId(), id],
     })),
   );
 

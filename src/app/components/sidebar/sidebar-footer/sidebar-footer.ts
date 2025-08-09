@@ -20,6 +20,7 @@ export class SidebarFooter {
   public readonly username = input.required<string>();
   public readonly hidden = input.required<boolean>();
   public readonly logoutClick = output();
+
   protected readonly icon = 'logout';
 
   public onLogout() {

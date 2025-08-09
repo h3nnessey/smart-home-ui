@@ -3,12 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, map, switchMap, tap, take } from 'rxjs/operators';
 import { BehaviorSubject, EMPTY, of } from 'rxjs';
-import { TokenStorage } from './token-storage';
 import type {
   UserProfile,
   UserCredentials,
   AuthToken,
 } from '@typings/user/interfaces';
+import { ApiRoutes } from '@shared/config/api';
+import { AppRoutes } from '@shared/config/app-routes';
+import { TokenStorage } from './token-storage';
 
 const DEFAULT_USER: UserProfile = {
   fullName: '',
@@ -45,26 +47,28 @@ export class AuthService {
   }
 
   public getUserProfile() {
-    return this.http.get<UserProfile>('/user/profile').pipe(
+    return this.http.get<UserProfile>(ApiRoutes.UserProfile).pipe(
       tap((user) => this.handleAuthSuccess(user)),
       catchError((error) => this.handleAuthError(error)),
     );
   }
 
   public login(credentials: UserCredentials) {
-    return this.http.post<AuthToken>('/user/login', credentials).pipe(
+    return this.http.post<AuthToken>(ApiRoutes.UserLogin, credentials).pipe(
       switchMap(({ token }) => {
         this.storage.saveToken(token);
         return this.getUserProfile();
       }),
-      tap(() => this.router.navigate(['/dashboard'], { replaceUrl: true })),
+      tap(() =>
+        this.router.navigate([AppRoutes.DashboardEntry], { replaceUrl: true }),
+      ),
       map(() => EMPTY),
     );
   }
 
   public logout() {
     this.resetAuthState();
-    this.router.navigate(['/login']);
+    this.router.navigate([AppRoutes.Login]);
   }
 
   private handleAuthSuccess(user: UserProfile) {

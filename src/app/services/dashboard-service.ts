@@ -8,6 +8,10 @@ import type {
   DashboardItem,
   DashboardContent,
 } from '@typings/dashboard/interfaces';
+import { ApiRoutes } from '@shared/config/api';
+import { AppRoutes } from '@shared/config/app-routes';
+
+const DEFAULT_CONTENT: DashboardContent = { tabs: [] };
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +22,7 @@ export class DashboardService {
   private readonly router = inject(Router);
 
   private readonly _dashboards = signal<DashboardItem[]>([]);
-  private readonly _content = signal<DashboardContent>({ tabs: [] });
+  private readonly _content = signal<DashboardContent>(DEFAULT_CONTENT);
   private readonly _currentDashboardId = signal<string | null>(null);
 
   public readonly content = this._content.asReadonly();
@@ -35,7 +39,7 @@ export class DashboardService {
   public async loadDashboards() {
     try {
       const dashboards = await lastValueFrom(
-        this.http.get<DashboardItem[]>('/dashboards'),
+        this.http.get<DashboardItem[]>(ApiRoutes.Dashboards),
       );
 
       this._dashboards.set(dashboards);
@@ -53,7 +57,9 @@ export class DashboardService {
 
     try {
       const content = await lastValueFrom(
-        this.http.get<DashboardContent>(`/dashboards/${dashboardId}`),
+        this.http.get<DashboardContent>(
+          `${ApiRoutes.Dashboards}/${dashboardId}`,
+        ),
       );
 
       this._content.set(content);
@@ -61,12 +67,10 @@ export class DashboardService {
 
       return content;
     } catch {
-      const empty = { tabs: [] };
-
-      this._content.set(empty);
+      this._content.set(DEFAULT_CONTENT);
       this._currentDashboardId.set(null);
 
-      return empty;
+      return DEFAULT_CONTENT;
     }
   }
 
@@ -80,7 +84,7 @@ export class DashboardService {
     const validTabId = this.getValidTabId(tabId);
 
     const newPath = [
-      'dashboard',
+      AppRoutes.DashboardEntry,
       validDashboardId,
       ...(validTabId ? [validTabId] : []),
     ];
