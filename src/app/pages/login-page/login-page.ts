@@ -1,4 +1,5 @@
 import { AsyncPipe } from '@angular/common';
+import { Router } from '@angular/router';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -31,6 +32,7 @@ import { TuiCardLarge, TuiForm, TuiHeader } from '@taiga-ui/layout';
 import { AuthService } from '@services/auth-service';
 import type { UserCredentials } from '@typings/user/interfaces';
 import { LoginErrorMessages } from '@typings/api/enums';
+import { AppRoutes } from '@shared/config/app-routes';
 
 const OPTIONS: TuiPasswordOptions = {
   icons: {
@@ -70,6 +72,7 @@ const OPTIONS: TuiPasswordOptions = {
 })
 export class LoginPage {
   private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
   protected readonly error = signal<string | null>(null);
   protected isLoading = false;
 
@@ -98,7 +101,7 @@ export class LoginPage {
 
     this.authService.login(this.form.value as UserCredentials).subscribe({
       next: () => {
-        this.form.reset();
+        this.router.navigate([AppRoutes.DashboardEntry], { replaceUrl: true });
       },
       error: (error) => {
         const message =

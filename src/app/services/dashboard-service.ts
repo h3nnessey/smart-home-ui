@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
@@ -10,6 +10,7 @@ import type {
 } from '@typings/dashboard/interfaces';
 import { ApiRoutes } from '@shared/config/api';
 import { AppRoutes } from '@shared/config/app-routes';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const DEFAULT_CONTENT: DashboardContent = { tabs: [] };
 
@@ -19,6 +20,7 @@ const DEFAULT_CONTENT: DashboardContent = { tabs: [] };
 export class DashboardService {
   private readonly http = inject(HttpClient);
   private readonly authService = inject(AuthService);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
 
   private readonly _dashboards = signal<DashboardItem[]>([]);
@@ -30,9 +32,12 @@ export class DashboardService {
 
   constructor() {
     this.authService.isAuthed$
-      .pipe(filter((isAuthed) => isAuthed))
-      .subscribe(async () => {
-        await this.loadDashboards();
+      .pipe(
+        filter((isAuthed) => isAuthed),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe({
+        next: () => this.loadDashboards(),
       });
   }
 

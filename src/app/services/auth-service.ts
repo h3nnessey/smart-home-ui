@@ -1,15 +1,14 @@
-import { inject, Injectable } from '@angular/core';
+import { DestroyRef, inject, Injectable } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { catchError, map, switchMap, tap, take } from 'rxjs/operators';
-import { BehaviorSubject, EMPTY, of } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
+import { BehaviorSubject, of } from 'rxjs';
 import type {
   UserProfile,
   UserCredentials,
   AuthToken,
 } from '@typings/user/interfaces';
 import { ApiRoutes } from '@shared/config/api';
-import { AppRoutes } from '@shared/config/app-routes';
 import { TokenStorage } from './token-storage';
 
 const DEFAULT_USER: UserProfile = {
@@ -22,8 +21,8 @@ const DEFAULT_USER: UserProfile = {
 })
 export class AuthService {
   private readonly http = inject(HttpClient);
-  private readonly router = inject(Router);
   private readonly storage = inject(TokenStorage);
+  private readonly destroyRef = inject(DestroyRef);
 
   private readonly userSubject = new BehaviorSubject<UserProfile>(DEFAULT_USER);
   private readonly isAuthedSubject = new BehaviorSubject<boolean>(false);
@@ -43,32 +42,30 @@ export class AuthService {
       return;
     }
 
-    this.getUserProfile().pipe(take(1)).subscribe();
+    this.getUserProfile().subscribe({
+      next: (user) => this.handleAuthSuccess(user),
+      error: (err) => this.handleAuthError(err),
+    });
   }
 
   public getUserProfile() {
-    return this.http.get<UserProfile>(ApiRoutes.UserProfile).pipe(
-      tap((user) => this.handleAuthSuccess(user)),
-      catchError((error) => this.handleAuthError(error)),
-    );
+    return this.http
+      .get<UserProfile>(ApiRoutes.UserProfile)
+      .pipe(take(1), takeUntilDestroyed(this.destroyRef));
   }
 
   public login(credentials: UserCredentials) {
     return this.http.post<AuthToken>(ApiRoutes.UserLogin, credentials).pipe(
       switchMap(({ token }) => {
         this.storage.saveToken(token);
+
         return this.getUserProfile();
       }),
-      tap(() =>
-        this.router.navigate([AppRoutes.DashboardEntry], { replaceUrl: true }),
-      ),
-      map(() => EMPTY),
     );
   }
 
   public logout() {
     this.resetAuthState();
-    this.router.navigate([AppRoutes.Login]);
   }
 
   private handleAuthSuccess(user: UserProfile) {

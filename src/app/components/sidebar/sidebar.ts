@@ -5,6 +5,8 @@ import { AuthService } from '@services/auth-service';
 import { SidebarHeader } from './sidebar-header/sidebar-header';
 import { SidebarFooter } from './sidebar-footer/sidebar-footer';
 import { SidebarMenu } from './sidebar-menu/sidebar-menu';
+import { Router } from '@angular/router';
+import { AppRoutes } from '@shared/config/app-routes';
 
 @Component({
   selector: 'app-sidebar',
@@ -19,6 +21,7 @@ import { SidebarMenu } from './sidebar-menu/sidebar-menu';
   styleUrls: ['./sidebar.scss'],
 })
 export class Sidebar {
+  private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
   private readonly authService = inject(AuthService);
 
@@ -70,5 +73,6 @@ export class Sidebar {
 
   public handleLogout() {
     this.authService.logout();
+    this.router.navigate([AppRoutes.Login], { replaceUrl: true });
   }
 }
