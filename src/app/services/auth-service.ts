@@ -1,17 +1,15 @@
 import { DestroyRef, inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { catchError, map, switchMap, tap, take } from 'rxjs/operators';
-import { BehaviorSubject, EMPTY, of } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { catchError, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, of } from 'rxjs';
 import type {
   UserProfile,
   UserCredentials,
   AuthToken,
 } from '@typings/user/interfaces';
 import { ApiRoutes } from '@shared/config/api';
-import { AppRoutes } from '@shared/config/app-routes';
 import { TokenStorage } from './token-storage';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const DEFAULT_USER: UserProfile = {
   fullName: '',
@@ -44,7 +42,9 @@ export class AuthService {
       return;
     }
 
-    this.getUserProfile().pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
+    return this.getUserProfile()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
   }
 
   public getUserProfile() {
