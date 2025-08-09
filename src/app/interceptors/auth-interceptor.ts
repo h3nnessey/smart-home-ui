@@ -6,6 +6,7 @@ import { throwError } from 'rxjs';
 import { TokenStorage } from '@services/token-storage';
 import { BASE_URL } from '@shared/config/api';
 import { AppRoutes } from '@shared/config/app-routes';
+import { HttpErrors } from '@typings/api/enums';
 
 const addApiPrefix = (request: HttpRequest<unknown>) => {
   if (request.url.startsWith('http')) {
@@ -48,7 +49,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(withAuthTokenRequest).pipe(
     catchError((error) => {
-      if (error.status === 401) {
+      if (error.status === HttpErrors.Unauthorized) {
         tokenStorage.deleteToken();
         router.navigate([AppRoutes.Login]);
       }

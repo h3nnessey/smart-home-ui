@@ -1,12 +1,12 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { TuiButton } from '@taiga-ui/core';
 import { TuiMaterialIconPipe } from '@pipes/tui-material-icon-pipe';
 import { AuthService } from '@services/auth-service';
+import { AppRoutes } from '@shared/config/app-routes';
 import { SidebarHeader } from './sidebar-header/sidebar-header';
 import { SidebarFooter } from './sidebar-footer/sidebar-footer';
 import { SidebarMenu } from './sidebar-menu/sidebar-menu';
-import { Router } from '@angular/router';
-import { AppRoutes } from '@shared/config/app-routes';
 
 @Component({
   selector: 'app-sidebar',
