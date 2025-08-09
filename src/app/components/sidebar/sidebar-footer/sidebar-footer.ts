@@ -1,7 +1,7 @@
-import { TuiMaterialIconPipe } from '@/pipes/tui-material-icon-pipe';
 import { Component, input, output } from '@angular/core';
 import { TuiAutoColorPipe, TuiButton, TuiIcon } from '@taiga-ui/core';
 import { TuiAvatar } from '@taiga-ui/kit';
+import { TuiMaterialIconPipe } from '@pipes/tui-material-icon-pipe';
 
 @Component({
   selector: 'app-sidebar-footer',

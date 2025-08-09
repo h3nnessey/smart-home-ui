@@ -1,0 +1,9 @@
+:host {
+  .tabs::before {
+    --t-color: var(--tui-background-accent-2);
+  }
+}
+
+.tab {
+  padding: var(--tui-padding-l);
+}

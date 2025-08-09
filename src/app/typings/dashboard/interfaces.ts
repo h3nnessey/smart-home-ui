@@ -1,5 +1,14 @@
-export interface GetTabItemsResponse {
+import type { Layout, SmartDeviceType } from './enums';
+import type { SmartDevice } from './types';
+
+export interface DashboardContent {
   tabs: TabItem[];
+}
+
+export interface DashboardItem {
+  id: string;
+  title: string;
+  icon: string;
 }
 
 export interface TabItem extends TabBase {
@@ -18,14 +27,6 @@ export interface CardItem {
   items: SmartDevice[];
 }
 
-export enum Layout {
-  SingleDevice = 'singleDevice',
-  HorizontalLayout = 'horizontalLayout',
-  VerticalLayout = 'verticalLayout',
-}
-
-export type SmartDevice = DeviceItem | SensorItem;
-
 export interface DeviceItem {
   type: SmartDeviceType.Device;
   icon: string;
@@ -40,17 +41,7 @@ export interface SensorItem {
   value: SensorItemValue;
 }
 
-export enum SmartDeviceType {
-  Device = 'device',
-  Sensor = 'sensor',
-}
-
 export interface SensorItemValue {
   amount: number;
   unit: string;
-}
-
-export interface User {
-  fullName: string;
-  initials: string;
 }

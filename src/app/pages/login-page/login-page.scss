@@ -2,18 +2,23 @@
 
 :host {
   @include core.page();
-}
 
-.form {
-  width: 100%;
-  max-width: 32rem;
+  .form {
+    width: 100%;
+    max-width: 32rem;
 
-  .title {
-    text-align: center;
-  }
+    .title {
+      text-align: center;
+    }
 
-  .footer {
-    display: flex;
-    justify-content: center;
+    .footer {
+      display: flex;
+      justify-content: center;
+    }
+
+    .error {
+      text-align: center;
+      font-size: var(--font-text-m);
+    }
   }
 }

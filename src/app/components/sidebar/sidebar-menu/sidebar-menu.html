@@ -1,22 +1,30 @@
-<nav [class.hidden]="hidden()" class="nav">
-  <ul>
-    @for (item of items(); track item.label) {
-      <li>
-        <button
-          [appearance]="item.disabled ? 'action-grayscale' : 'outline'"
-          tuiButton
-          type="button"
-          [disabled]="item.disabled"
-        >
-          <tui-avatar
-            [class.disabled]="item.disabled"
-            class="icon"
-            size="m"
-            src="{{ item.icon | tuiMaterialIcon }}"
-          />
-          {{ item.label }}
-        </button>
-      </li>
-    }
-  </ul>
-</nav>
+@if (dashboards().length > 0) {
+  <nav [class.hidden]="hidden()" class="nav">
+    <ul class="nav-list">
+      @for (dashboard of dashboards(); track dashboard.id) {
+        <li>
+          <button
+            class="link"
+            appearance="outline"
+            tuiButton
+            type="button"
+            [routerLink]="`/dashboard/${dashboard.id}`"
+            routerLinkActive="link-active"
+            [disabled]="disabled(dashboard.id)"
+          >
+            <tui-avatar
+              class="icon"
+              size="m"
+              [src]="dashboard.icon | tuiMaterialIcon"
+            />
+            {{ dashboard.title }}
+          </button>
+        </li>
+      }
+    </ul>
+  </nav>
+} @else {
+  <p tuiTitle class="empty" [class.hidden]="hidden()">
+    {{ emptyMessage }}
+  </p>
+}

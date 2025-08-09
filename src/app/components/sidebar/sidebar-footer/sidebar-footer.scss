@@ -1,7 +1,9 @@
+$border: 1px solid var(--tui-border-normal);
+
 :host {
-  border-left: 1px solid var(--tui-border-normal);
-  border-bottom: 1px solid var(--tui-border-normal);
-  border-top: 1px solid var(--tui-border-normal);
+  border-left: $border;
+  border-bottom: $border;
+  border-top: $border;
 
   &:has(.footer.hidden) {
     border: none;
@@ -22,7 +24,7 @@
       gap: var(--tui-padding-l);
 
       .subtitle {
-        font-size: 1.1rem;
+        font-size: var(--font-heading-h6);
       }
     }
   }

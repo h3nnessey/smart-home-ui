@@ -1,0 +1,12 @@
+<tui-tabs size="l" class="tabs">
+  @for (tab of tabs(); track tab.id) {
+    <button
+      class="tab"
+      tuiTab
+      [routerLink]="tab.path"
+      routerLinkActive="link-active"
+    >
+      {{ tab.title }}
+    </button>
+  }
+</tui-tabs>

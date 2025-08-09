@@ -1,23 +1,10 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { TuiButton } from '@taiga-ui/core';
-import { TuiMaterialIconPipe } from '@/pipes/tui-material-icon-pipe';
+import { TuiMaterialIconPipe } from '@pipes/tui-material-icon-pipe';
+import { AuthService } from '@services/auth-service';
 import { SidebarHeader } from './sidebar-header/sidebar-header';
 import { SidebarFooter } from './sidebar-footer/sidebar-footer';
-import { SidebarMenu, type MenuItem } from './sidebar-menu/sidebar-menu';
-import { AuthService } from '@/services/auth-service';
-
-const ITEMS: MenuItem[] = [
-  {
-    label: 'Overview',
-    icon: 'dashboard',
-    disabled: false,
-  },
-  {
-    label: 'About',
-    icon: 'info',
-    disabled: true,
-  },
-];
+import { SidebarMenu } from './sidebar-menu/sidebar-menu';
 
 @Component({
   selector: 'app-sidebar',
@@ -34,14 +21,30 @@ const ITEMS: MenuItem[] = [
 export class Sidebar {
   private readonly destroyRef = inject(DestroyRef);
   private readonly authService = inject(AuthService);
+
   protected readonly isOpen = signal(true);
   protected readonly isMobile = signal(false);
-  protected readonly isAuthed = this.authService.isAuthed;
-  protected readonly user = this.authService.user;
-  protected readonly items = ITEMS;
+
+  protected readonly headerTitle = 'Smart Home UI';
 
   constructor() {
     this.setupMediaQuery();
+  }
+
+  protected get isAuthed() {
+    return this.authService.isAuthed;
+  }
+
+  protected get user() {
+    return this.authService.user;
+  }
+
+  protected get icon() {
+    return this.isOpen() ? 'close' : 'more_vert';
+  }
+
+  protected get title() {
+    return this.isOpen() ? 'Close sidebar' : 'Open sidebar';
   }
 
   private setupMediaQuery() {
@@ -67,9 +70,5 @@ export class Sidebar {
 
   public handleLogout() {
     this.authService.logout();
-  }
-
-  public get icon() {
-    return this.isOpen() ? 'close' : 'more_vert';
   }
 }

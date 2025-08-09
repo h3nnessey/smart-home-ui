@@ -3,8 +3,8 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { TokenStorage } from '@/services/token-storage';
-import { BASE_URL } from '@/shared/config/api';
+import { TokenStorage } from '@services/token-storage';
+import { BASE_URL } from '@shared/config/api';
 
 const addApiPrefix = (request: HttpRequest<unknown>) => {
   if (request.url.startsWith('http')) {

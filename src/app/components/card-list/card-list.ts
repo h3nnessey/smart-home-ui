@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import type { CardItem } from '@typings/dashboard/interfaces';
 import { Card } from './card/card';
-import type { CardItem } from '@/types';
 
 @Component({
   selector: 'app-card-list',

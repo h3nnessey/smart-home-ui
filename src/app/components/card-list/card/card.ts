@@ -9,9 +9,10 @@ import { FormsModule } from '@angular/forms';
 import { TuiAppearance, TuiTitle } from '@taiga-ui/core';
 import { TuiCardLarge, TuiHeader } from '@taiga-ui/layout';
 import { TuiSwitch } from '@taiga-ui/kit';
-import { Device } from '@/components/smart-devices/device/device';
-import { Sensor } from '@/components/smart-devices/sensor/sensor';
-import { SmartDeviceType, type CardItem } from '@/types';
+import { Device } from '@components/smart-devices/device/device';
+import { Sensor } from '@components/smart-devices/sensor/sensor';
+import type { CardItem } from '@typings/dashboard/interfaces';
+import { SmartDeviceType } from '@typings/dashboard/enums';
 
 @Component({
   selector: 'app-card',

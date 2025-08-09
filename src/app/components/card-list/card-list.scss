@@ -4,7 +4,7 @@
   gap: var(--tui-padding-l);
   padding: var(--tui-padding-l);
 
-  @media screen and (width <= 880px) {
+  @media screen and (width <= var(--breakpoint-m)) {
     & {
       justify-content: center;
     }

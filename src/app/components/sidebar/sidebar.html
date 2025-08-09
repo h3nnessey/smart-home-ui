@@ -1,22 +1,22 @@
-@if (isAuthed()) {
+@if (isAuthed) {
   @let hidden = !isOpen();
 
   <aside [class.hidden]="hidden" class="sidebar">
-    <app-sidebar-header title="Smart Home UI" [hidden]="hidden" />
+    <app-sidebar-header [title]="headerTitle" [hidden]="hidden" />
     <button
       class="btn"
       appearance="secondary"
       iconStart="{{ icon | tuiMaterialIcon }}"
       size="m"
       tuiIconButton
-      [title]="!hidden ? 'Close sidebar' : 'Open sidebar'"
+      [title]="title"
       type="button"
       (click)="toggleSidebar()"
     ></button>
-    <app-sidebar-menu [items]="items" [hidden]="hidden" />
+    <app-sidebar-menu [hidden]="hidden" />
     <app-sidebar-footer
-      [initials]="user().initials"
-      [username]="user().fullName"
+      [initials]="user.initials"
+      [username]="user.fullName"
       (logoutClick)="handleLogout()"
       [hidden]="hidden"
     />

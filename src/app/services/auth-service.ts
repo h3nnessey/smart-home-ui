@@ -1,10 +1,16 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { TokenStorage } from './token-storage';
-import type { User } from '@/types';
 import { Router } from '@angular/router';
+import { catchError, map, switchMap, tap, take } from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, of } from 'rxjs';
+import { TokenStorage } from './token-storage';
+import type {
+  UserProfile,
+  UserCredentials,
+  AuthToken,
+} from '@typings/user/interfaces';
 
-const DEFAULT_USER: User = {
+const DEFAULT_USER: UserProfile = {
   fullName: '',
   initials: '',
 };
@@ -14,32 +20,84 @@ const DEFAULT_USER: User = {
 })
 export class AuthService {
   private readonly http = inject(HttpClient);
-  private readonly tokenStorage = inject(TokenStorage);
   private readonly router = inject(Router);
-  public readonly user = signal<User>(DEFAULT_USER);
-  public readonly isAuthed = signal(false);
+  private readonly storage = inject(TokenStorage);
 
-  public login() {
-    const token = this.tokenStorage.getToken();
+  private readonly userSubject = new BehaviorSubject<UserProfile>(DEFAULT_USER);
+  private readonly isAuthedSubject = new BehaviorSubject<boolean>(false);
+  private readonly isInitializedSubject = new BehaviorSubject<boolean>(false);
 
-    if (token) {
-      this.http.get<User>('user/profile').subscribe({
-        next: (value) => {
-          this.isAuthed.set(true);
-          this.user.set(value);
-        },
-        error: () => {
-          this.isAuthed.set(false);
-          this.user.set(DEFAULT_USER);
-        },
-      });
+  public readonly user$ = this.userSubject.asObservable();
+  public readonly isAuthed$ = this.isAuthedSubject.asObservable();
+  public readonly isInitialized$ = this.isInitializedSubject.asObservable();
+
+  constructor() {
+    this.initializeAuthState();
+  }
+
+  private initializeAuthState() {
+    if (!this.storage.getToken()) {
+      this.resetAuthState();
+      return;
     }
+
+    this.getUserProfile().pipe(take(1)).subscribe();
+  }
+
+  public getUserProfile() {
+    return this.http.get<UserProfile>('/user/profile').pipe(
+      tap((user) => this.handleAuthSuccess(user)),
+      catchError((error) => this.handleAuthError(error)),
+    );
+  }
+
+  public login(credentials: UserCredentials) {
+    return this.http.post<AuthToken>('/user/login', credentials).pipe(
+      switchMap(({ token }) => {
+        this.storage.saveToken(token);
+        return this.getUserProfile();
+      }),
+      tap(() => this.router.navigate(['/dashboard'], { replaceUrl: true })),
+      map(() => EMPTY),
+    );
   }
 
   public logout() {
-    this.tokenStorage.deleteToken();
-    this.user.set(DEFAULT_USER);
-    this.isAuthed.set(false);
+    this.resetAuthState();
     this.router.navigate(['/login']);
+  }
+
+  private handleAuthSuccess(user: UserProfile) {
+    this.userSubject.next(user);
+    this.isAuthedSubject.next(true);
+    this.isInitializedSubject.next(true);
+  }
+
+  private handleAuthError(error: unknown) {
+    if (
+      typeof error === 'object' &&
+      error !== null &&
+      'status' in error &&
+      error.status === 401
+    ) {
+      this.logout();
+    }
+
+    return of(DEFAULT_USER);
+  }
+
+  private resetAuthState() {
+    this.storage.deleteToken();
+    this.userSubject.next(DEFAULT_USER);
+    this.isAuthedSubject.next(false);
+    this.isInitializedSubject.next(true);
+  }
+
+  public get user() {
+    return this.userSubject.value;
+  }
+
+  public get isAuthed() {
+    return this.isAuthedSubject.value;
   }
 }

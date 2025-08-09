@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TuiRoot } from '@taiga-ui/core';
-import { Sidebar } from './components/sidebar/sidebar';
+import { Sidebar } from '@components/sidebar/sidebar';
 
 @Component({
   selector: 'app-root',

@@ -1,5 +1,5 @@
 import { Pipe, type PipeTransform } from '@angular/core';
-import type { SensorItemValue } from '@/types';
+import type { SensorItemValue } from '@typings/dashboard/interfaces';
 
 @Pipe({
   name: 'sensorValue',

@@ -9,7 +9,7 @@
   />
   <div class="title" tuiTitle>{{ data.label }}</div>
   <input
-    [class.hidden]="layout() === 'singleDevice'"
+    [class.hidden]="layout() === layoutTypes.SingleDevice"
     class="input"
     tuiSwitch
     type="checkbox"
