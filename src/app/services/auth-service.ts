@@ -1,8 +1,8 @@
-import { DestroyRef, inject, Injectable } from '@angular/core';
+import { DestroyRef, Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { catchError, switchMap, tap } from 'rxjs/operators';
-import { BehaviorSubject, of } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 import type {
   UserProfile,
   UserCredentials,
@@ -10,15 +10,14 @@ import type {
 } from '@typings/user/interfaces';
 import { ApiRoutes } from '@shared/config/api';
 import { TokenStorage } from './token-storage';
+import { isUnauthorizedError } from '@shared/lib/is-unauthorized-error';
 
 const DEFAULT_USER: UserProfile = {
   fullName: '',
   initials: '',
 };
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly destroyRef = inject(DestroyRef);
@@ -36,25 +35,31 @@ export class AuthService {
     this.initializeAuthState();
   }
 
-  private initializeAuthState() {
+  private initializeAuthState(): void {
     if (!this.storage.getToken()) {
       this.resetAuthState();
       return;
     }
 
-    return this.getUserProfile()
+    this.getUserProfile()
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe();
+      .subscribe({
+        error: (err) => console.error(err),
+      });
   }
 
-  public getUserProfile() {
+  public getUserProfile(): Observable<UserProfile> {
     return this.http.get<UserProfile>(ApiRoutes.UserProfile).pipe(
-      tap((user) => this.handleAuthSuccess(user)),
+      switchMap((user) => {
+        this.handleAuthSuccess(user);
+
+        return of(user);
+      }),
       catchError((error) => this.handleAuthError(error)),
     );
   }
 
-  public login(credentials: UserCredentials) {
+  public login(credentials: UserCredentials): Observable<UserProfile> {
     return this.http.post<AuthToken>(ApiRoutes.UserLogin, credentials).pipe(
       switchMap(({ token }) => {
         this.storage.saveToken(token);
@@ -64,41 +69,36 @@ export class AuthService {
     );
   }
 
-  public logout() {
+  public logout(): void {
     this.resetAuthState();
   }
 
-  private handleAuthSuccess(user: UserProfile) {
+  private handleAuthSuccess(user: UserProfile): void {
     this.userSubject.next(user);
     this.isAuthedSubject.next(true);
     this.isInitializedSubject.next(true);
   }
 
-  private handleAuthError(error: unknown) {
-    if (
-      typeof error === 'object' &&
-      error !== null &&
-      'status' in error &&
-      error.status === 401
-    ) {
+  private handleAuthError(error: unknown): Observable<UserProfile> {
+    if (isUnauthorizedError(error)) {
       this.logout();
     }
 
     return of(DEFAULT_USER);
   }
 
-  private resetAuthState() {
+  private resetAuthState(): void {
     this.storage.deleteToken();
     this.userSubject.next(DEFAULT_USER);
     this.isAuthedSubject.next(false);
     this.isInitializedSubject.next(true);
   }
 
-  public get user() {
+  public get user(): UserProfile {
     return this.userSubject.value;
   }
 
-  public get isAuthed() {
-    return this.isAuthedSubject.value;
+  public get isAuthed(): boolean {
+    return this.isAuthedSubject.value && !!this.storage.getToken();
   }
 }

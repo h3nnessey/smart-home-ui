@@ -33,7 +33,7 @@ import {
 import { TuiCardLarge, TuiForm, TuiHeader } from '@taiga-ui/layout';
 import { AuthService } from '@services/auth-service';
 import type { UserCredentials } from '@typings/user/interfaces';
-import { LoginErrorMessages } from '@typings/api/enums';
+import { HttpErrors, LoginErrorMessages } from '@typings/api/enums';
 import { AppRoutes } from '@shared/config/app-routes';
 
 const OPTIONS: TuiPasswordOptions = {
@@ -113,7 +113,7 @@ export class LoginPage {
         },
         error: (error) => {
           const message =
-            error.status === 401
+            error.status === HttpErrors.Unauthorized
               ? LoginErrorMessages.InvalidCredentials
               : LoginErrorMessages.UnknownError;
 

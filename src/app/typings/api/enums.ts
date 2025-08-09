@@ -7,3 +7,7 @@ export enum AppRouteParams {
   DashboardId = 'dashboardId',
   TabId = 'tabId',
 }
+
+export enum HttpErrors {
+  Unauthorized = 401,
+}
