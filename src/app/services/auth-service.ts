@@ -10,7 +10,7 @@ import type {
 } from '@typings/user/interfaces';
 import { ApiRoutes } from '@shared/config/api';
 import { TokenStorage } from './token-storage';
-import { isUnauthorizedError } from '@shared/lib/is-unauthorized-error';
+import { isUnauthorizedHttpError } from '@shared/lib/is-unauthorized-http-error';
 
 const DEFAULT_USER: UserProfile = {
   fullName: '',
@@ -80,7 +80,7 @@ export class AuthService {
   }
 
   private handleAuthError(error: unknown): Observable<UserProfile> {
-    if (isUnauthorizedError(error)) {
+    if (isUnauthorizedHttpError(error)) {
       this.logout();
     }
 

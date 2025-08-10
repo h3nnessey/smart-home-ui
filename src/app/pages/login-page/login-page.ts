@@ -33,8 +33,9 @@ import {
 import { TuiCardLarge, TuiForm, TuiHeader } from '@taiga-ui/layout';
 import { AuthService } from '@services/auth-service';
 import type { UserCredentials } from '@typings/user/interfaces';
-import { HttpErrors, LoginErrorMessages } from '@typings/api/enums';
+import { LoginErrorMessages } from '@typings/api/enums';
 import { AppRoutes } from '@shared/config/app-routes';
+import { isUnauthorizedHttpError } from '@shared/lib/is-unauthorized-http-error';
 
 const OPTIONS: TuiPasswordOptions = {
   icons: {
@@ -112,10 +113,9 @@ export class LoginPage {
           });
         },
         error: (error) => {
-          const message =
-            error.status === HttpErrors.Unauthorized
-              ? LoginErrorMessages.InvalidCredentials
-              : LoginErrorMessages.UnknownError;
+          const message = isUnauthorizedHttpError(error)
+            ? LoginErrorMessages.InvalidCredentials
+            : LoginErrorMessages.UnknownError;
 
           this.error.set(message);
           this.isLoading = false;
