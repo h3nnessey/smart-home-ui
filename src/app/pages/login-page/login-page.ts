@@ -110,7 +110,7 @@ export class LoginPage {
     this.isLoading = true;
 
     this.authService
-      .login(this.form.value as UserCredentials)
+      .login(this.form.getRawValue())
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
