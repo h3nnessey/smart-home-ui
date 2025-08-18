@@ -9,10 +9,10 @@ import {
   signal,
 } from '@angular/core';
 import {
-  FormControl,
-  FormGroup,
   ReactiveFormsModule,
   Validators,
+  NonNullableFormBuilder,
+  type FormControl,
 } from '@angular/forms';
 import {
   TuiAppearance,
@@ -36,6 +36,11 @@ import type { UserCredentials } from '@typings/user/interfaces';
 import { LoginErrorMessages } from '@typings/api/enums';
 import { AppRoutes } from '@shared/config/app-routes';
 import { isUnauthorizedHttpError } from '@shared/lib/is-unauthorized-http-error';
+
+interface LoginForm {
+  password: FormControl<string>;
+  userName: FormControl<string>;
+}
 
 const OPTIONS: TuiPasswordOptions = {
   icons: {
@@ -77,19 +82,20 @@ export class LoginPage {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
-  protected readonly error = signal<string | null>(null);
-  protected isLoading = false;
+  private readonly fb = inject(NonNullableFormBuilder);
 
-  protected readonly form = new FormGroup({
-    password: new FormControl('', [
-      Validators.required,
-      Validators.minLength(2),
-    ]),
-    userName: new FormControl('', [
-      Validators.required,
-      Validators.minLength(2),
-    ]),
+  protected readonly error = signal<string | null>(null);
+
+  protected readonly form = this.fb.group<LoginForm>({
+    password: this.fb.control('', {
+      validators: [Validators.required, Validators.minLength(2)],
+    }),
+    userName: this.fb.control('', {
+      validators: [Validators.required, Validators.minLength(2)],
+    }),
   });
+
+  protected isLoading = false;
 
   constructor() {
     this.form.valueChanges.subscribe(() => {
