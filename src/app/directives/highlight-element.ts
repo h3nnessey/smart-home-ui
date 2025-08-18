@@ -20,7 +20,7 @@ export class HighlightElement {
 
   constructor() {
     effect(() => {
-      if (this.el && this.shouldHighlight()) {
+      if (this.shouldHighlight()) {
         this.highlightElement();
       } else {
         this.obscureElement();
