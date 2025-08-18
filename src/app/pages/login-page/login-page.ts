@@ -31,8 +31,8 @@ import {
   TuiButtonLoading,
 } from '@taiga-ui/kit';
 import { TuiCardLarge, TuiForm, TuiHeader } from '@taiga-ui/layout';
+import { tap } from 'rxjs';
 import { AuthService } from '@services/auth-service';
-import type { UserCredentials } from '@typings/user/interfaces';
 import { LoginErrorMessages } from '@typings/api/enums';
 import { AppRoutes } from '@shared/config/app-routes';
 import { isUnauthorizedHttpError } from '@shared/lib/is-unauthorized-http-error';
@@ -98,11 +98,16 @@ export class LoginPage {
   protected isLoading = false;
 
   constructor() {
-    this.form.valueChanges.subscribe(() => {
-      if (this.error()) {
-        this.error.set(null);
-      }
-    });
+    this.form.valueChanges
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        tap(() => {
+          if (this.error()) {
+            this.error.set(null);
+          }
+        }),
+      )
+      .subscribe();
   }
 
   protected handleSubmit() {
