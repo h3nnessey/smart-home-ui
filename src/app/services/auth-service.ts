@@ -2,7 +2,7 @@ import { DestroyRef, Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { catchError, switchMap } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import type {
   UserProfile,
   UserCredentials,
@@ -50,11 +50,7 @@ export class AuthService {
 
   public getUserProfile(): Observable<UserProfile> {
     return this.http.get<UserProfile>(ApiRoutes.UserProfile).pipe(
-      switchMap((user) => {
-        this.handleAuthSuccess(user);
-
-        return of(user);
-      }),
+      tap((user) => this.handleAuthSuccess(user)),
       catchError((error) => this.handleAuthError(error)),
     );
   }
