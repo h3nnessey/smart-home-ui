@@ -7,13 +7,11 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 import { DashboardService } from '@services/dashboard-service';
-import type { RouteParams } from '@typings/api/interfaces';
 import { TabSwitcher } from '@components/tab-switcher/tab-switcher';
 import { CardList } from '@components/card-list/card-list';
 import { AppRouteParams } from '@typings/api/enums';
-import { AppRoutes } from '@shared/config/app-routes';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,33 +24,26 @@ export class Dashboard {
   private readonly route = inject(ActivatedRoute);
   private readonly dashboardService = inject(DashboardService);
 
-  private readonly routeParams = toSignal(
+  protected readonly content = this.dashboardService.content;
+
+  public readonly dashboardId = toSignal(
     this.route.params.pipe(
-      distinctUntilChanged(
-        (prev, curr) =>
-          prev[AppRouteParams.DashboardId] ===
-            curr[AppRouteParams.DashboardId] &&
-          prev[AppRouteParams.TabId] === curr[AppRouteParams.TabId],
-      ),
+      map((params) => params[AppRouteParams.DashboardId]),
+      distinctUntilChanged(),
     ),
-    { initialValue: {} as RouteParams },
   );
-  public readonly dashboardId = () =>
-    this.routeParams()[AppRouteParams.DashboardId];
-  public readonly tabId = () => this.routeParams()[AppRouteParams.TabId];
+
+  public readonly tabId = toSignal(
+    this.route.params.pipe(
+      map((params) => params[AppRouteParams.TabId]),
+      distinctUntilChanged(),
+    ),
+  );
 
   public readonly currentCards = computed(
     () =>
       this.dashboardService.content().tabs.find((t) => t.id === this.tabId())
         ?.cards || [],
-  );
-
-  public readonly tabs = computed(() =>
-    this.dashboardService.content().tabs.map(({ id, title }) => ({
-      id,
-      title,
-      path: [`/${AppRoutes.DashboardEntry}`, this.dashboardId(), id],
-    })),
   );
 
   constructor() {

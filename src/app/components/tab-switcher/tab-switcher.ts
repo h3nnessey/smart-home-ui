@@ -1,7 +1,13 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+} from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TuiTabs } from '@taiga-ui/kit';
-import type { NavigationTab } from '@typings/data/interfaces';
+import { AppRoutes } from '@shared/config/app-routes';
+import type { TabItem } from '@typings/dashboard/interfaces';
 
 @Component({
   selector: 'app-tab-switcher',
@@ -11,5 +17,14 @@ import type { NavigationTab } from '@typings/data/interfaces';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabSwitcher {
-  public tabs = input.required<NavigationTab[]>();
+  public readonly tabs = input.required<TabItem[]>();
+  public readonly dashboardId = input.required<string>();
+
+  protected readonly items = computed(() =>
+    this.tabs().map(({ id, title }) => ({
+      id,
+      title,
+      path: [`/${AppRoutes.DashboardEntry}`, this.dashboardId(), id],
+    })),
+  );
 }
