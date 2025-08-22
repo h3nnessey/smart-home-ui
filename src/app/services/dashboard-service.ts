@@ -30,17 +30,6 @@ export class DashboardService {
   public readonly content = this._content.asReadonly();
   public readonly dashboards = this._dashboards.asReadonly();
 
-  constructor() {
-    this.authService.isAuthed$
-      .pipe(
-        filter((isAuthed) => isAuthed),
-        takeUntilDestroyed(this.destroyRef),
-      )
-      .subscribe({
-        next: () => this.loadDashboards(),
-      });
-  }
-
   public async loadDashboards() {
     try {
       const dashboards = await lastValueFrom(
