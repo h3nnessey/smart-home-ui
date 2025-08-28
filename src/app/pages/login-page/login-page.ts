@@ -1,5 +1,4 @@
 import { AsyncPipe } from '@angular/common';
-import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   ChangeDetectionStrategy,
@@ -31,11 +30,11 @@ import {
   TuiButtonLoading,
 } from '@taiga-ui/kit';
 import { TuiCardLarge, TuiForm, TuiHeader } from '@taiga-ui/layout';
-import { tap } from 'rxjs';
-import { AuthService } from '@services/auth-service';
-import { LoginErrorMessages } from '@typings/api/enums';
-import { AppRoutes } from '@shared/config/app-routes';
-import { isUnauthorizedHttpError } from '@shared/lib/is-unauthorized-http-error';
+import { catchError, tap } from 'rxjs';
+import { AuthService } from '@services/auth/auth-service';
+import { NotificationService } from '@services/notification/notification-service';
+import { AppRouter } from '@services/router/app-router';
+import type { AuthLoginError } from '@typings/api/interfaces';
 
 interface LoginForm {
   password: FormControl<string>;
@@ -80,11 +79,10 @@ const OPTIONS: TuiPasswordOptions = {
 })
 export class LoginPage {
   private readonly authService = inject(AuthService);
-  private readonly router = inject(Router);
+  private readonly router = inject(AppRouter);
   private readonly destroyRef = inject(DestroyRef);
   private readonly fb = inject(NonNullableFormBuilder);
-
-  protected readonly error = signal<string | null>(null);
+  private readonly alerts = inject(NotificationService);
 
   protected readonly form = this.fb.group<LoginForm>({
     password: this.fb.control('', {
@@ -95,42 +93,30 @@ export class LoginPage {
     }),
   });
 
-  protected isLoading = false;
+  protected isLoading = signal(false);
 
   constructor() {
     this.form.valueChanges
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        tap(() => {
-          if (this.error()) {
-            this.error.set(null);
-          }
-        }),
-      )
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();
   }
 
   protected handleSubmit() {
-    this.error.set(null);
-    this.isLoading = true;
+    this.isLoading.set(true);
 
     this.authService
       .login(this.form.getRawValue())
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: () => {
-          this.router.navigate([AppRoutes.DashboardEntry], {
-            replaceUrl: true,
-          });
-        },
-        error: (error) => {
-          const message = isUnauthorizedHttpError(error)
-            ? LoginErrorMessages.InvalidCredentials
-            : LoginErrorMessages.UnknownError;
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        tap(() => this.router.navigate.toDashboard()),
+        catchError(({ message }: AuthLoginError) => {
+          this.isLoading.set(false);
 
-          this.error.set(message);
-          this.isLoading = false;
-        },
-      });
+          return this.alerts
+            .showError(message)
+            .pipe(takeUntilDestroyed(this.destroyRef));
+        }),
+      )
+      .subscribe();
   }
 }

@@ -8,7 +8,7 @@
             appearance="outline"
             tuiButton
             type="button"
-            [routerLink]="`/dashboard/${dashboard.id}`"
+            [routerLink]="`/${appRoutes.Dashboard.Root}/${dashboard.id}`"
             routerLinkActive="link-active"
             [disabled]="disabled(dashboard.id)"
           >

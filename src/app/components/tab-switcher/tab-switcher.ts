@@ -24,7 +24,7 @@ export class TabSwitcher {
     this.tabs().map(({ id, title }) => ({
       id,
       title,
-      path: [`/${AppRoutes.DashboardEntry}`, this.dashboardId(), id],
+      path: [`/${AppRoutes.Dashboard.Root}`, this.dashboardId(), id],
     })),
   );
 }

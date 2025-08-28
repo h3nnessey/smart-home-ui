@@ -1,32 +1,30 @@
-import type { Routes } from '@angular/router';
+import type { Route, Routes } from '@angular/router';
 import { authGuard } from '@guards/auth-guard';
 import { AppRoutes } from '@shared/config/app-routes';
 
 const loadDashboard = () =>
   import('@pages/dashboard/dashboard').then((m) => m.Dashboard);
 
+const dashboardRedirectionRoute: Route = {
+  path: '',
+  redirectTo: AppRoutes.Dashboard.Root,
+  pathMatch: 'full',
+};
+
 export const routes: Routes = [
   {
-    path: '',
+    path: AppRoutes.Dashboard.Root,
     canActivate: [authGuard],
     children: [
       {
-        path: AppRoutes.DashboardTab,
+        path: AppRoutes.Dashboard.Entry,
         loadComponent: loadDashboard,
       },
       {
-        path: AppRoutes.Dashboard,
+        path: AppRoutes.Dashboard.Tab,
         loadComponent: loadDashboard,
       },
-      {
-        path: AppRoutes.DashboardEntry,
-        loadComponent: loadDashboard,
-      },
-      {
-        path: '',
-        redirectTo: AppRoutes.DashboardEntry,
-        pathMatch: 'full',
-      },
+      dashboardRedirectionRoute,
     ],
   },
   {
@@ -39,6 +37,7 @@ export const routes: Routes = [
     loadComponent: () =>
       import('@pages/login-page/login-page').then((m) => m.LoginPage),
   },
+  dashboardRedirectionRoute,
   {
     path: '**',
     redirectTo: AppRoutes.NotFound,

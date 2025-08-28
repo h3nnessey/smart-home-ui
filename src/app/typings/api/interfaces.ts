@@ -1,4 +1,4 @@
-import type { HttpErrors } from './enums';
+import type { HttpErrors, LoginErrorMessages } from './enums';
 
 export interface RouteParams {
   dashboardId?: string;
@@ -7,4 +7,8 @@ export interface RouteParams {
 
 export interface UnauthorizedHttpError {
   status: HttpErrors.Unauthorized;
+}
+
+export interface AuthLoginError {
+  message: LoginErrorMessages;
 }

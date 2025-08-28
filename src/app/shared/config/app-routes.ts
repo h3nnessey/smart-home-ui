@@ -1,7 +1,14 @@
+export const AppRouteParams = {
+  DashboardId: 'dashboardId',
+  TabId: 'tabId',
+} as const;
+
 export const AppRoutes = {
   Login: 'login',
   NotFound: 'not-found',
-  DashboardEntry: 'dashboard',
-  Dashboard: 'dashboard/:dashboardId',
-  DashboardTab: 'dashboard/:dashboardId/:tabId',
-};
+  Dashboard: {
+    Root: 'dashboard',
+    Entry: `:${AppRouteParams.DashboardId}`,
+    Tab: `:${AppRouteParams.DashboardId}/:${AppRouteParams.TabId}`,
+  },
+} as const;

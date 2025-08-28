@@ -1,9 +1,8 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
 import { TuiButton } from '@taiga-ui/core';
 import { TuiMaterialIconPipe } from '@pipes/tui-material-icon-pipe';
-import { AuthService } from '@services/auth-service';
-import { AppRoutes } from '@shared/config/app-routes';
+import { AppRouter } from '@services/router/app-router';
+import { AuthService } from '@services/auth/auth-service';
 import { SidebarHeader } from './sidebar-header/sidebar-header';
 import { SidebarFooter } from './sidebar-footer/sidebar-footer';
 import { SidebarMenu } from './sidebar-menu/sidebar-menu';
@@ -21,7 +20,7 @@ import { SidebarMenu } from './sidebar-menu/sidebar-menu';
   styleUrls: ['./sidebar.scss'],
 })
 export class Sidebar {
-  private readonly router = inject(Router);
+  private readonly router = inject(AppRouter);
   private readonly destroyRef = inject(DestroyRef);
   private readonly authService = inject(AuthService);
 
@@ -73,6 +72,6 @@ export class Sidebar {
 
   public handleLogout() {
     this.authService.logout();
-    this.router.navigate([AppRoutes.Login], { replaceUrl: true });
+    this.router.navigate.toLogin();
   }
 }

@@ -20,7 +20,6 @@
     <tui-icon tuiPassword />
   </tui-textfield>
   <tui-error formControlName="password" [error]="[] | tuiFieldError | async" />
-  <tui-error class="error" [error]="error()" />
   <footer class="footer">
     <button
       class="btn"
@@ -28,7 +27,7 @@
       tuiButton
       type="submit"
       [disabled]="!form.valid"
-      [loading]="isLoading"
+      [loading]="isLoading()"
     >
       Login
     </button>
