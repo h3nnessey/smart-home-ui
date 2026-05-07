@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import type { CardItem } from '@typings/dashboard/interfaces';
+import type { CardItem } from '@typings/dashboard';
 import { Card } from './card/card';
 
 @Component({

@@ -1,16 +1,21 @@
 import { inject } from '@angular/core';
-import { type CanActivateFn } from '@angular/router';
-import { filter, map, take } from 'rxjs/operators';
+import { Router, type CanActivateFn } from '@angular/router';
+import { filter, map, switchMap, take } from 'rxjs/operators';
+import { AppRoutes } from '@shared/config/routing';
 import { AuthService } from '@services/auth/auth-service';
-import { AppRouter } from '@services/router/app-router';
 
 export const authGuard: CanActivateFn = () => {
-  const router = inject(AppRouter);
+  const router = inject(Router);
   const authService = inject(AuthService);
 
   return authService.isInitialized$.pipe(
-    filter((initialized) => initialized),
+    filter((isInitialized) => isInitialized),
     take(1),
-    map(() => authService.isAuthed || router.urlTree.login()),
+    switchMap(() =>
+      authService.isAuthed$.pipe(
+        take(1),
+        map((isAuthed) => isAuthed || router.createUrlTree([AppRoutes.Login])),
+      ),
+    ),
   );
 };

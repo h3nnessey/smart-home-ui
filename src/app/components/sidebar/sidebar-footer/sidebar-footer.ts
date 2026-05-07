@@ -18,12 +18,9 @@ import { TuiMaterialIconPipe } from '@pipes/tui-material-icon-pipe';
 export class SidebarFooter {
   public readonly initials = input.required<string>();
   public readonly username = input.required<string>();
-  public readonly hidden = input.required<boolean>();
-  public readonly logoutClick = output();
+  public readonly logout = output();
 
-  protected readonly icon = 'logout';
-
-  public onLogout() {
-    this.logoutClick.emit();
+  protected onLogout() {
+    this.logout.emit();
   }
 }

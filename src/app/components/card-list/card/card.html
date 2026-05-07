@@ -20,15 +20,15 @@
   <div class="devices">
     @for (item of card().items; track item.label) {
       @switch (item.type) {
-        @case (smartDeviceType.Device) {
+        @case ("device") {
           <app-device
             [layout]="card().layout"
             [device]="item"
             (stateChanged)="setSwitchState()"
-          ></app-device>
+          />
         }
-        @case (smartDeviceType.Sensor) {
-          <app-sensor [layout]="card().layout" [sensor]="item"></app-sensor>
+        @case ("sensor") {
+          <app-sensor [layout]="card().layout" [sensor]="item" />
         }
       }
     }

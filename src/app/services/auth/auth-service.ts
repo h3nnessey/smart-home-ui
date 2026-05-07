@@ -1,14 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, of } from 'rxjs';
-import { catchError, switchMap, tap } from 'rxjs/operators';
-import type { UserProfile, UserCredentials } from '@typings/user/interfaces';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import {
+  DEFAULT_USER,
+  type UserCredentials,
+  type UserProfile,
+} from '@typings/user';
 import { TokenService } from '../token/token-service';
 import { AuthApiService } from './auth-api-service';
-
-const DEFAULT_USER: UserProfile = {
-  fullName: '',
-  initials: '',
-};
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -19,13 +18,15 @@ export class AuthService {
   private readonly isAuthedSubject = new BehaviorSubject<boolean>(false);
   private readonly isInitializedSubject = new BehaviorSubject<boolean>(false);
 
-  public readonly isAuthed$ = this.isAuthedSubject.asObservable();
+  public readonly user$ = this.userSubject.asObservable();
   public readonly isInitialized$ = this.isInitializedSubject.asObservable();
+  public readonly isAuthed$ = this.isAuthedSubject
+    .asObservable()
+    .pipe(map((isAuthed) => isAuthed && !!this.tokenService.getToken()));
 
   public async initializeAuthState() {
     if (!this.tokenService.getToken()) {
-      this.resetAuthState();
-      return;
+      return void this.resetAuthState();
     }
 
     await this.loadUser();
@@ -71,13 +72,5 @@ export class AuthService {
     this.userSubject.next(DEFAULT_USER);
     this.isAuthedSubject.next(false);
     this.isInitializedSubject.next(true);
-  }
-
-  public get user() {
-    return this.userSubject.value;
-  }
-
-  public get isAuthed() {
-    return this.isAuthedSubject.value && !!this.tokenService.getToken();
   }
 }

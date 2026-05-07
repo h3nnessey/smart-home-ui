@@ -1,15 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
-import { ApiRoutes } from '@shared/config/api';
 import { isUnauthorizedHttpError } from '@shared/lib/is-unauthorized-http-error';
-import { LoginErrorMessages } from '@typings/api/enums';
-import type { AuthLoginError } from '@typings/api/interfaces';
-import type {
-  AuthToken,
-  UserCredentials,
-  UserProfile,
-} from '@typings/user/interfaces';
+import { ApiRoutes } from '@shared/config/routing';
+import type { AuthToken, UserCredentials, UserProfile } from '@typings/user';
+import { LoginErrorMessages, type AuthLoginError } from '@typings/api';
 
 @Injectable({
   providedIn: 'root',

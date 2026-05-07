@@ -1,4 +1,5 @@
 import { AsyncPipe } from '@angular/common';
+import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   ChangeDetectionStrategy,
@@ -33,8 +34,8 @@ import { TuiCardLarge, TuiForm, TuiHeader } from '@taiga-ui/layout';
 import { catchError, tap } from 'rxjs';
 import { AuthService } from '@services/auth/auth-service';
 import { NotificationService } from '@services/notification/notification-service';
-import { AppRouter } from '@services/router/app-router';
-import type { AuthLoginError } from '@typings/api/interfaces';
+import { AppRoutes } from '@shared/config/routing';
+import type { AuthLoginError } from '@typings/api';
 
 interface LoginForm {
   password: FormControl<string>;
@@ -79,7 +80,7 @@ const OPTIONS: TuiPasswordOptions = {
 })
 export class LoginPage {
   private readonly authService = inject(AuthService);
-  private readonly router = inject(AppRouter);
+  private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly alerts = inject(NotificationService);
@@ -93,13 +94,7 @@ export class LoginPage {
     }),
   });
 
-  protected isLoading = signal(false);
-
-  constructor() {
-    this.form.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe();
-  }
+  protected readonly isLoading = signal(false);
 
   protected handleSubmit() {
     this.isLoading.set(true);
@@ -107,8 +102,11 @@ export class LoginPage {
     this.authService
       .login(this.form.getRawValue())
       .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        tap(() => this.router.navigate.toDashboard()),
+        tap(() =>
+          this.router.navigate([AppRoutes.Dashboard.Root], {
+            replaceUrl: true,
+          }),
+        ),
         catchError(({ message }: AuthLoginError) => {
           this.isLoading.set(false);
 
@@ -116,6 +114,7 @@ export class LoginPage {
             .showError(message)
             .pipe(takeUntilDestroyed(this.destroyRef));
         }),
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
   }

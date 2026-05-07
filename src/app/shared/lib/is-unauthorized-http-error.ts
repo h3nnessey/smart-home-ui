@@ -1,5 +1,4 @@
-import { HttpErrors } from '@typings/api/enums';
-import type { UnauthorizedHttpError } from '@typings/api/interfaces';
+import { type UnauthorizedHttpError, HttpErrors } from '@typings/api';
 
 export const isUnauthorizedHttpError = (
   error: unknown,

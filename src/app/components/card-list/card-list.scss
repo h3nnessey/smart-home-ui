@@ -1,10 +1,12 @@
+@use "variables" as vars;
+
 :host {
   display: flex;
   flex-wrap: wrap;
   gap: var(--tui-padding-l);
   padding: var(--tui-padding-l);
 
-  @media screen and (width <= var(--breakpoint-m)) {
+  @media screen and (max-width: vars.$breakpoint-l) {
     & {
       justify-content: center;
     }

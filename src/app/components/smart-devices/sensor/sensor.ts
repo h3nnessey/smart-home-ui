@@ -3,8 +3,7 @@ import { TuiBlockDetails } from '@taiga-ui/layout';
 import { TuiIcon } from '@taiga-ui/core';
 import { SensorValue } from '@pipes/sensor-value';
 import { TuiMaterialIconPipe } from '@pipes/tui-material-icon-pipe';
-import type { Layout } from '@typings/dashboard/enums';
-import type { SensorItem } from '@typings/dashboard/interfaces';
+import type { Layout, SensorItem } from '@typings/dashboard';
 
 @Component({
   selector: 'app-sensor',

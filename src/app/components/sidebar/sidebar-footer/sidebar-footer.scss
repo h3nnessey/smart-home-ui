@@ -5,11 +5,6 @@ $border: 1px solid var(--tui-border-normal);
   border-bottom: $border;
   border-top: $border;
 
-  &:has(.footer.hidden) {
-    border: none;
-    visibility: hidden;
-  }
-
   .footer {
     display: flex;
     justify-content: space-between;
