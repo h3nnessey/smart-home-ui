@@ -1,21 +1,26 @@
-.footer {
-  display: flex;
-  flex-basis: 10%;
-  align-items: center;
-  gap: var(--tui-padding-l);
-  padding: var(--tui-padding-m);
-  border: 1px solid var(--tui-background-neutral-1-hover);
+$border: 1px solid var(--tui-border-normal);
 
-  .subtitle {
-    font-size: 1.1rem;
-  }
+:host {
+  border-left: $border;
+  border-bottom: $border;
+  border-top: $border;
 
-  & {
-    border-bottom: none;
-  }
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--tui-padding-l);
+    padding: var(--tui-padding-m);
+    width: 100%;
 
-  &.hidden {
-    border: none;
-    visibility: hidden;
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: var(--tui-padding-l);
+
+      .subtitle {
+        font-size: var(--font-heading-h6);
+      }
+    }
   }
 }

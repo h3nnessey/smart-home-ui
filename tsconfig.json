@@ -15,8 +15,20 @@
     "target": "ES2022",
     "module": "preserve",
     "verbatimModuleSyntax": true,
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/app/*"]
+      "@components/*": ["./src/app/components/*"],
+      "@services/*": ["./src/app/services/*"],
+      "@directives/*": ["./src/app/directives/*"],
+      "@guards/*": ["./src/app/guards/*"],
+      "@interceptors/*": ["./src/app/interceptors/*"],
+      "@pages/*": ["./src/app/pages/*"],
+      "@pipes/*": ["./src/app/pipes/*"],
+      "@shared/*": ["./src/app/shared/*"],
+      "@styles/*": ["./src/app/styles/*"],
+      "@typings/*": ["./src/app/typings/*"],
+      "@injection-tokens/*": ["./src/app/injection-tokens/*"],
+      "@environment": ["./src/environments/environment.ts"]
     }
   },
   "angularCompilerOptions": {

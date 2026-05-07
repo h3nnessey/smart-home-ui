@@ -8,19 +8,21 @@ import { FormsModule } from '@angular/forms';
 import { TuiIcon, TuiTitle } from '@taiga-ui/core';
 import { TuiBadgedContent, TuiSwitch } from '@taiga-ui/kit';
 import { TuiCell } from '@taiga-ui/layout';
-import { HighlightDevice } from '@/directives/highlight-device';
-import type { DeviceItem, Layout } from '@/types';
+import { TuiMaterialIconPipe } from '@pipes/tui-material-icon-pipe';
+import { HighlightElement } from '@directives/highlight-element';
+import { Layout, type DeviceItem } from '@typings/dashboard';
 
 @Component({
   selector: 'app-device',
   imports: [
+    FormsModule,
     TuiBadgedContent,
     TuiSwitch,
-    FormsModule,
     TuiIcon,
     TuiTitle,
     TuiCell,
-    HighlightDevice,
+    TuiMaterialIconPipe,
+    HighlightElement,
   ],
   templateUrl: './device.html',
   styleUrl: './device.scss',
@@ -30,13 +32,10 @@ export class Device {
   public readonly layout = input.required<Layout>();
   public readonly device = input.required<DeviceItem>();
   public readonly stateChanged = output<boolean>();
+  protected readonly layoutTypes = Layout;
 
   public changeState(value: boolean) {
     this.device().state = value;
     this.stateChanged.emit(value);
-  }
-
-  protected get icon() {
-    return `@tui.material.filled.${this.device().icon}`;
   }
 }

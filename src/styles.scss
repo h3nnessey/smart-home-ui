@@ -1,3 +1,22 @@
+:root {
+  --font-heading-h6: 20px;
+  --font-heading-h5: 24px;
+  --font-heading-h4: 28px;
+  --font-heading-h3: 36px;
+  --font-heading-h2: 44px;
+  --font-heading-h1: 50px;
+
+  --font-text-xs: 11px;
+  --font-text-s: 13px;
+  --font-text-m: 15px;
+  --font-text-l: 17px;
+  --font-text-xl: 19px;
+
+  --breakpoint-l: 1024px;
+  --breakpoint-m: 880px;
+  --breakpoint-s: 700px;
+}
+
 body {
   font-family: "Inter", sans-serif;
 }
@@ -6,4 +25,14 @@ body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+
+.t-root-content {
+  display: flex;
+  min-height: 100vh;
+  height: 100%;
+}
+
+input[type="checkbox"]:checked {
+  background-color: var(--tui-background-accent-2);
 }

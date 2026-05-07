@@ -1,0 +1,5 @@
+@use "core";
+
+:host {
+  @include core.page();
+}

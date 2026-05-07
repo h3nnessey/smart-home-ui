@@ -1,19 +1,30 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+} from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TuiTabs } from '@taiga-ui/kit';
-import { TabsState } from '@/services/tabs-state';
+import { AppRoutes } from '@shared/config/app-routes';
+import type { TabItem } from '@typings/dashboard/interfaces';
 
 @Component({
   selector: 'app-tab-switcher',
-  imports: [TuiTabs],
+  imports: [TuiTabs, RouterLink, RouterLinkActive],
   templateUrl: './tab-switcher.html',
   styleUrl: './tab-switcher.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabSwitcher {
-  protected readonly tabsState = inject(TabsState);
-  protected tabs = this.tabsState.tabs;
+  public readonly tabs = input.required<TabItem[]>();
+  public readonly dashboardId = input.required<string>();
 
-  protected handleTabClick(index: number) {
-    this.tabsState.activeTabIndex.set(index);
-  }
+  protected readonly items = computed(() =>
+    this.tabs().map(({ id, title }) => ({
+      id,
+      title,
+      path: [`/${AppRoutes.Dashboard.Root}`, this.dashboardId(), id],
+    })),
+  );
 }

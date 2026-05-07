@@ -1,19 +1,24 @@
-@let hidden = !isOpen();
+@if (isAuthed) {
+  @let hidden = !isOpen();
 
-<aside [class.hidden]="!isOpen()" class="sidebar">
-  <app-sidebar-header title="Smart Home UI" [hidden]="hidden" />
-  @if (isMobile()) {
+  <aside [class.hidden]="hidden" class="sidebar">
+    <app-sidebar-header [title]="headerTitle" [hidden]="hidden" />
     <button
       class="btn"
-      appearance="outline"
-      [iconStart]="buttonIcon"
+      appearance="secondary"
+      iconStart="{{ icon | tuiMaterialIcon }}"
       size="m"
       tuiIconButton
+      [title]="title"
       type="button"
-      [style.border-radius.%]="100"
       (click)="toggleSidebar()"
     ></button>
-  }
-  <app-sidebar-menu [items]="items()" [hidden]="hidden" />
-  <app-sidebar-footer src="RS" title="RSSchool. Angular" [hidden]="hidden" />
-</aside>
+    <app-sidebar-menu [hidden]="hidden" />
+    <app-sidebar-footer
+      [initials]="user.initials"
+      [username]="user.fullName"
+      (logoutClick)="handleLogout()"
+      [hidden]="hidden"
+    />
+  </aside>
+}

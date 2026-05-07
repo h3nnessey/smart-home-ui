@@ -1,15 +1,8 @@
+$border: 1px solid var(--tui-border-normal);
+
 .header {
-  display: flex;
-  align-items: center;
   padding: var(--tui-padding-m);
-  border: 1px solid var(--tui-background-neutral-1-hover);
-
-  &.hidden {
-    border: none;
-
-    .title {
-      border: none;
-      visibility: hidden;
-    }
-  }
+  border-top: $border;
+  border-left: $border;
+  box-shadow: inset 0 -1px var(--tui-border-normal);
 }

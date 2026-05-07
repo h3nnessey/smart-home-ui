@@ -9,5 +9,4 @@ import { TuiHeader } from '@taiga-ui/layout';
 })
 export class SidebarHeader {
   public readonly title = input.required<string>();
-  public readonly hidden = input.required<boolean>();
 }

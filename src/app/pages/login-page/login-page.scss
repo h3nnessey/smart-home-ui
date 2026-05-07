@@ -1,0 +1,19 @@
+@use "core";
+
+:host {
+  @include core.page();
+
+  .form {
+    width: 100%;
+    max-width: 32rem;
+
+    .title {
+      text-align: center;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

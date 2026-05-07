@@ -5,15 +5,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1.25rem;
+    gap: calc(var(--tui-padding-m) * 2);
     width: 100%;
   }
 
   .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
+    margin: 0;
   }
 
   &[data-layout="singleDevice"] {

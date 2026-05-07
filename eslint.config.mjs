@@ -21,6 +21,10 @@ export default tseslint.config(
     rules: {
       "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/no-extraneous-class": "off",
+      "@typescript-eslint/no-non-null-assertion": "off",
+      "unicorn/prevent-abbreviations": "off",
+      "unicorn/no-null": "off",
+      "unicorn/consistent-function-scoping": "off",
     },
   },
 );

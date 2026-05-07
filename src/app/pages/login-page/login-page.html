@@ -1,0 +1,35 @@
+<form
+  class="form page"
+  tuiAppearance="floating"
+  tuiCardLarge
+  tuiForm="l"
+  [formGroup]="form"
+  (ngSubmit)="handleSubmit()"
+>
+  <header tuiHeader>
+    <h2 class="title" tuiTitle>Welcome Home!</h2>
+  </header>
+  <tui-textfield [tuiTextfieldCleaner]="false">
+    <label tuiLabel>Username</label>
+    <input type="text" tuiTextfield formControlName="userName" />
+  </tui-textfield>
+  <tui-error formControlName="userName" [error]="[] | tuiFieldError | async" />
+  <tui-textfield [tuiTextfieldCleaner]="false">
+    <label tuiLabel>Password</label>
+    <input tuiTextfield type="password" formControlName="password" />
+    <tui-icon tuiPassword />
+  </tui-textfield>
+  <tui-error formControlName="password" [error]="[] | tuiFieldError | async" />
+  <footer class="footer">
+    <button
+      class="btn"
+      size="l"
+      tuiButton
+      type="submit"
+      [disabled]="!form.valid"
+      [loading]="isLoading()"
+    >
+      Login
+    </button>
+  </footer>
+</form>

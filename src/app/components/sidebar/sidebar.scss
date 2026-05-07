@@ -1,3 +1,7 @@
+$border: 1px solid var(--tui-border-normal);
+$offset: 7px;
+$width: 15px;
+
 .sidebar {
   position: relative;
   display: flex;
@@ -5,29 +9,35 @@
   justify-content: center;
   width: 400px;
   height: 100%;
-  background: var(--tui-background-elevation-2);
-  transition:
-    width 0.2s ease,
-    opacity 0.1s ease;
+  background: var(--tui-background-base);
+  transition: width 0.2s ease;
 
   .btn {
     position: absolute;
-    right: var(--tui-padding-s);
-    top: calc(var(--tui-padding-s) / 2.7);
+    border-radius: 100%;
+    right: $offset;
+    top: $offset;
   }
 
   &.hidden {
-    width: 50px;
+    width: $width;
     overflow: hidden;
     background: var(--tui-background-primary);
 
     .btn {
-      top: var(--tui-padding-s);
-      right: 0;
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: $width;
+      border-radius: 0;
+      border-top: $border;
+      border-left: $border;
+      border-bottom: $border;
     }
   }
 
-  @media screen and (width <= 801px) {
+  @media screen and (width <= 880px) {
     &:not(&.hidden) {
       position: fixed;
       width: 100%;

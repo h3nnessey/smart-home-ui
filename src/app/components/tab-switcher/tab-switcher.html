@@ -1,5 +1,12 @@
-<tui-tabs [(activeItemIndex)]="tabsState.activeTabIndex" size="l">
-  @for (tab of tabs; track tab.id) {
-    <button tuiTab (click)="handleTabClick($index)">{{ tab.title }}</button>
+<tui-tabs size="l" class="tabs">
+  @for (item of items(); track item.id) {
+    <button
+      class="tab"
+      tuiTab
+      [routerLink]="item.path"
+      routerLinkActive="link-active"
+    >
+      {{ item.title }}
+    </button>
   }
 </tui-tabs>

@@ -1,7 +1,9 @@
+$bg-2: var(--tui-background-accent-2);
+
 :host {
   flex: 1;
   padding: var(--tui-padding-m);
-  border: 1px solid var(--tui-background-neutral-1-hover);
+  border-left: 1px solid var(--tui-border-normal);
 
   &:has(.nav.hidden) {
     border: none;
@@ -12,25 +14,45 @@
 .nav {
   width: 100%;
 
-  button {
+  .link {
     width: 100%;
     justify-content: flex-start;
-  }
 
-  ul {
-    list-style: none;
-  }
-
-  .icon {
-    color: var(--tui-background-accent-1);
-
-    &.disabled {
-      color: var(--tui-text-secondary);
+    &:disabled {
+      opacity: 1;
     }
+
+    .icon {
+      color: var(--tui-background-accent-1);
+    }
+
+    &-active {
+      color: $bg-2;
+      outline: 1px solid $bg-2;
+
+      .icon {
+        color: $bg-2;
+      }
+    }
+  }
+
+  &-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--tui-padding-s);
+    list-style: none;
   }
 
   &.hidden {
     border: none;
     visibility: hidden;
+  }
+}
+
+.empty {
+  opacity: 1;
+
+  &.hidden {
+    opacity: 0;
   }
 }

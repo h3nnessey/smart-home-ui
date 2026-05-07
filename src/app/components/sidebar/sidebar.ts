@@ -1,52 +1,77 @@
-import { Component, computed, input, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { TuiButton } from '@taiga-ui/core';
+import { TuiMaterialIconPipe } from '@pipes/tui-material-icon-pipe';
+import { AppRouter } from '@services/router/app-router';
+import { AuthService } from '@services/auth/auth-service';
 import { SidebarHeader } from './sidebar-header/sidebar-header';
 import { SidebarFooter } from './sidebar-footer/sidebar-footer';
-import { SidebarMenu, type MenuItem } from './sidebar-menu/sidebar-menu';
+import { SidebarMenu } from './sidebar-menu/sidebar-menu';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [TuiButton, SidebarHeader, SidebarFooter, SidebarMenu],
+  imports: [
+    TuiButton,
+    SidebarHeader,
+    SidebarFooter,
+    SidebarMenu,
+    TuiMaterialIconPipe,
+  ],
   templateUrl: './sidebar.html',
   styleUrls: ['./sidebar.scss'],
-  host: {
-    '(window:resize)': 'handleResize($event)',
-  },
 })
 export class Sidebar {
-  public readonly items = input.required<MenuItem[]>();
+  private readonly router = inject(AppRouter);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly authService = inject(AuthService);
+
   protected readonly isOpen = signal(true);
-  protected readonly isMobile = computed(this.isMobileView.bind(this));
-  protected readonly windowWidth = signal(0);
-  private readonly mobileBreakpoint = 1024;
+  protected readonly isMobile = signal(false);
+
+  protected readonly headerTitle = 'Smart Home UI';
 
   constructor() {
-    this.windowWidth.set(window.innerWidth);
-    this.isOpen.set(!this.isMobileView());
+    this.setupMediaQuery();
   }
 
-  public handleResize(event: Event) {
-    const width = this.getWindowWidth(event.target as Window);
-
-    this.isOpen.set(width < this.mobileBreakpoint ? false : true);
-    this.windowWidth.set(width);
+  protected get isAuthed() {
+    return this.authService.isAuthed;
   }
+
+  protected get user() {
+    return this.authService.user;
+  }
+
+  protected get icon() {
+    return this.isOpen() ? 'close' : 'more_vert';
+  }
+
+  protected get title() {
+    return this.isOpen() ? 'Close sidebar' : 'Open sidebar';
+  }
+
+  private setupMediaQuery() {
+    const query = globalThis.matchMedia('(max-width: 1024px)');
+
+    this.handleMediaChange({ matches: query.matches });
+
+    query.addEventListener('change', this.handleMediaChange);
+
+    this.destroyRef.onDestroy(() => {
+      query.removeEventListener('change', this.handleMediaChange);
+    });
+  }
+
+  private handleMediaChange = ({ matches }: { matches: boolean }) => {
+    this.isMobile.set(matches);
+    this.isOpen.set(!matches);
+  };
 
   public toggleSidebar() {
     this.isOpen.update((value) => !value);
   }
 
-  private getWindowWidth(window: Window) {
-    return window.innerWidth;
-  }
-
-  private isMobileView(width = 1024) {
-    return this.windowWidth() < width;
-  }
-
-  public get buttonIcon() {
-    return this.isOpen()
-      ? `@tui.material.filled.close`
-      : `@tui.material.filled.menu`;
+  public handleLogout() {
+    this.authService.logout();
+    this.router.navigate.toLogin();
   }
 }

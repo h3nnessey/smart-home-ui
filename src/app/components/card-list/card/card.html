@@ -25,10 +25,10 @@
             [layout]="card().layout"
             [device]="item"
             (stateChanged)="setSwitchState()"
-          ></app-device>
+          />
         }
         @case ("sensor") {
-          <app-sensor [layout]="card().layout" [sensor]="item"></app-sensor>
+          <app-sensor [layout]="card().layout" [sensor]="item" />
         }
       }
     }
